@@ -8,6 +8,12 @@ D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\css\tailwind-input.css
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\favicon.ico
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\js\site.js
+D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.css
+D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.json
+D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.min.css
+D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.scss
+D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\fonts\bootstrap-icons.woff
+D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\fonts\bootstrap-icons.woff2
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -197,6 +203,7 @@ D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\CeremonyMonitorApp.MvcApplicationPartsAssemblyInfo.cache
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\CeremonyMonitorApp.RazorAssemblyInfo.cache
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\CeremonyMonitorApp.RazorAssemblyInfo.cs
+D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\CeremonyMonitorApp.sourcelink.json
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\rjimswa.dswa.cache.json
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
@@ -213,10 +220,3 @@ D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\CeremonyMonitorApp.pdb
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\CeremonyMonitorApp.genruntimeconfig.cache
 D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\ref\CeremonyMonitorApp.dll
-D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.css
-D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.json
-D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.min.css
-D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\bootstrap-icons.scss
-D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\fonts\bootstrap-icons.woff
-D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\bin\Debug\net8.0\wwwroot\lib\bootstrap-icons\font\fonts\bootstrap-icons.woff2
-D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\obj\Debug\net8.0\CeremonyMonitorApp.sourcelink.json
