@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Nominasikan Awardee";
+}
+
+<div class=" max-w-2xl">
+    <h1 class="text-2xl font-bold text-navy">Nominate Awardee</h1>
+    <p class="text-sm text-gray-500 mt-1">
+        Ajukan Karyawan dari departemen anda untuk dibacakan di ceremony bulan ini
+    </p>
+
+    @if (ViewBag.NoCeremonyAvailable == true)
+    {
+        <div class="bg-red-50 text-red-600 text-sm px-4 py-3 rounded mt-6">
+            No ceremony is available for nomination at this time. Please check back later.
+        </div>
+    }
+    else
+    {
+        var ceremony = ViewBag.CurrentCeremony as Ceremony;
+
+        <div class="bg-gray-50 rounded-lg px-4 mt-6 text-sm">
+            <span class="font-semibold">This Mont Ceremony</span>
+            @ceremony?.ScheduledDate.ToString("ddd, dd MMMM yyyy")
+        </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="bg-red-50 text-red-600 text-2xl-sm px-4 py-3 rounded mt-4">
+                <ul class="list-disc pl-5"> 
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                       <li>@error.ErrorMessage</li>   
+                    }
+                </ul>
+          </div>
+        }
+
+        <form asp-controller="Awardees" asp-action="Create" method="post" class="mt-6 space-y-4">
+            <div>
+                <label class="block text-sm font-semibold mb-1">
+                    Nama Karyawan
+                </label>
+                <select name="EmployeeId" class="w-full border rounded px-4 py-2" asp-items="ViewBag.EmployeeId">
+                    <option value="">-----Pilih Karyawan------</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold mb-1">Judul Penghargaan</label>
+                <input type="text" name="title" value="@ViewBag.Title" class="w-full border rounded px-4 py-2"
+                       placeholder="cth. Employee of the Month" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold mb-1">Alasan / Catatan</label>
+                <textarea name="reason" rows="4" class="w-full border rounded px-4 py-2"
+                    placeholder="jelaskan Peencapaian singkat...">
+                    @ViewBag.Reason
+                </textarea>
+            </div>
+
+            <button type="submit" class="inline-flex items-center justify-center px-5 py-2.5 bg-[#0056A8] hover:bg-[#004485] text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-150">
+                Submit
+            </button>
+        </form>
+    }
+
+    <a href="/Awardees" class="text-navy underline text-sm mt-6 inline-block">Back to Nominate List</a>
+</div>

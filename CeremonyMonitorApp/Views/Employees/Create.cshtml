@@ -1,0 +1,72 @@
+@model CeremonyMonitorApp.Models.Employee
+
+@{
+    ViewData["Title"] = "Tambah Employee Baru";
+}
+
+<div class="pcm-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="pcm-title">Tambah Employee Baru</h1>
+            <p class="pcm-subtitle">Masukkan data karyawan untuk didaftarkan ke sistem Panasonic Ceremony Monitor.</p>
+        </div>
+        <div>
+            <a asp-action="Index" class="btn-pcm-secondary">
+                <i class="bi bi-arrow-left"></i> Kembali ke Daftar
+            </a>
+        </div>
+    </div>
+
+    <div class="pcm-card" style="max-width: 720px;">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 mb-4" role="alert"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ExternalID" class="pcm-label">External ID (NIK / RFID)</label>
+                    <input asp-for="ExternalID" class="pcm-input" placeholder="Contoh: EMP-2026-001" />
+                    <span asp-validation-for="ExternalID" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FullName" class="pcm-label">Nama Lengkap</label>
+                    <input asp-for="FullName" class="pcm-input" placeholder="Masukkan nama lengkap" required />
+                    <span asp-validation-for="FullName" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Position" class="pcm-label">Jabatan / Position</label>
+                    <input asp-for="Position" class="pcm-input" placeholder="Contoh: Staff Air Conditioner" />
+                    <span asp-validation-for="Position" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="DepartmentId" class="pcm-label">Target Departemen</label>
+                    <select asp-for="DepartmentId" class="pcm-input" asp-items="ViewBag.DepartmentId" required>
+                        <option value="">-- Pilih Departemen --</option>
+                    </select>
+                    <span asp-validation-for="DepartmentId" class="text-danger small mt-1 d-block"></span>
+                </div>
+
+                <div class="col-md-12 mb-4">
+                    <label asp-for="LastSyncedAt" class="pcm-label">Waktu Sync Terakhir (Opsional)</label>
+                    <input asp-for="LastSyncedAt" class="pcm-input" type="datetime-local" />
+                    <span asp-validation-for="LastSyncedAt" class="text-danger small mt-1 d-block"></span>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3 pt-3 border-top">
+                <button type="submit" class="btn-pcm-primary">
+                    <i class="bi bi-plus-lg"></i> Simpan Employee
+                </button>
+                <a asp-action="Index" class="btn-pcm-cancel">
+                    <i class="bi bi-x-lg"></i> Batal
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

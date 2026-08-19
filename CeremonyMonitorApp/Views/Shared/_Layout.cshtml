@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Panasonic Ceremony Monitor</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CeremonyMonitorApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+        .pcm-app-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        .pcm-sidebar {
+            width: 260px;
+            background-color: #ffffff;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+            flex-shrink: 0;
+        }
+        .pcm-brand {
+            font-weight: 700;
+            font-size: 16px;
+            color: #0050A0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            margin-bottom: 20px;
+        }
+        .pcm-role-box {
+            background-color: #e7eefc;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+        }
+        .pcm-role-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #0050A0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .pcm-role-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #17233f;
+        }
+        .pcm-nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+        .pcm-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .pcm-nav-item:hover {
+            background-color: #f1f5f9;
+            color: #0050A0;
+        }
+        .pcm-nav-item.active {
+            background-color: #0050A0;
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+        .pcm-new-ceremony-btn {
+            background-color: #0050A0;
+            color: #ffffff !important;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            margin-top: auto;
+        }
+        .pcm-new-ceremony-btn:hover {
+            background-color: #003d7a;
+        }
+        .pcm-main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .pcm-top-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 32px;
+            gap: 16px;
+        }
+        .pcm-header-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+        .pcm-body-padding {
+            padding: 28px 32px;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="pcm-app-wrapper">
+        <!-- Sidebar -->
+        <aside class="pcm-sidebar">
+            <div class="pcm-brand">
+                <i class="bi bi-display fs-5"></i> Panasonic Ceremony Monitor
+            </div>
+            
+            <div class="pcm-role-box">
+                <div class="pcm-role-title">SYSTEM ACCESS</div>
+                <div class="pcm-role-name">Role: HRD</div>
+            </div>
+
+            <nav class="pcm-nav-menu">
+    <a asp-controller="Home" asp-action="Index" class="pcm-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")">
+        <i class="bi bi-grid-1x2"></i> Ceremony Dashboard
+    </a>
+    <a asp-controller="RoleAssignments" asp-action="Index" class="pcm-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "RoleAssignments" ? "active" : "")">
+        <i class="bi bi-people"></i> Ceremony Roles
+    </a>
+    <a asp-controller="Home" asp-action="Schedule" class="pcm-nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Schedule" ? "active" : "")">
+        <i class="bi bi-calendar-event"></i> Schedule
+    </a>
+    <a asp-controller="Awardees" asp-action="Index" class="pcm-nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Awardees" ? "active" : "")">
+        <i class="bi bi-award"></i> Awardee
+    </a>
+    <a asp-controller="Home" asp-action="MCChecklist" class="pcm-nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "MCChecklist" ? "active" : "")">
+        <i class="bi bi-check2-square"></i> MC Checklist
+    </a>
+    <a asp-controller="Home" asp-action="PrayersSpeech" class="pcm-nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "PrayersSpeech" ? "active" : "")">
+        <i class="bi bi-file-text"></i> Prayers Speech
+    </a>
+    <a asp-controller="Home" asp-action="History" class="pcm-nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "History" ? "active" : "")">
+        <i class="bi bi-clock-history"></i> History
+    </a>
+</nav>
+
+
+            <a asp-controller="Home" asp-action="CreateCeremony" class="pcm-new-ceremony-btn">
+                + New Ceremony
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="pcm-main-content">
+            <header class="pcm-top-header">
+                <div class="pcm-header-icon"><i class="bi bi-search"></i></div>
+                <div class="pcm-header-icon"><i class="bi bi-bell"></i></div>
+                <div class="pcm-header-icon" style="background-color: #0050A0; color: #ffffff;"><i class="bi bi-person"></i></div>
+            </header>
+
+            <div class="pcm-body-padding">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

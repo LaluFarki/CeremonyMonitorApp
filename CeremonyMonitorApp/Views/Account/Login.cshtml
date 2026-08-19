@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login - Panasonic Ceremony Monitor</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="flex min-h-screen">
+    <div class="w-1/2 bg-navy text-white p-16 flex flex-col justify-between">
+        <div>
+            <span class="inline-block bg-white/10 text-xs font-semibold px-3 py-1 rounded-full">PANASONIC</span>
+            <h1 class="text-5xl font-bold mt-6">Ceremony<br />Monitor</h1>
+        </div>
+        <div class="flex gap-8 text-sm">
+            <div><div class="text-2xl font-bold">1x</div>Ceremony / Bulan</div>
+            <div><div class="text-2xl font-bold">5</div>Role Peran</div>
+            <div><div class="text-2xl font-bold">100%</div>Paperless</div>
+        </div>
+    </div>
+
+    <div class="w-1/2 flex items-center justify-center bg-white">
+        <form asp-controller="Account" asp-action="Login" method="post" class="w-full max-w-sm">
+            <h2 class="text-2xl font-bold text-navy mb-2">Masuk ke Dashboard</h2>
+            <p class="text-sm text-gray-500 mb-6">Khusus akun HRD dan Sekretaris. Akun dibuat oleh administrator.</p>
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="bg-red-50 text-red-600 text-sm px-4 py-2 rounded mb-4">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+
+            <label class="block text-sm font-semibold mb-1">Email Perusahaan</label>
+            <input type="email" name="email" required class="w-full border rounded px-4 py-2 mb-4" placeholder="nama@panasonic.co.id" />
+
+            <label class="block text-sm font-semibold mb-1">Password</label>
+            <input type="password" name="password" required class="w-full border rounded px-4 py-2 mb-6" placeholder="••••••••" />
+
+            <button type="submit" class="w-full bg-navy text-white font-semibold py-3 rounded">Login</button>
+        </form>
+    </div>
+</body>
+</html>

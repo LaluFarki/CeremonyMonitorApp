@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6C6631A0-B0E8-4453-A556-5905D7B95A26}|CeremonyMonitorApp\\CeremonyMonitorApp.csproj|d:\\panasonic ceremony monitor - ui design\\ceremonymonitorapp\\ceremonymonitorapp\\views\\awardeeapproval\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6C6631A0-B0E8-4453-A556-5905D7B95A26}|CeremonyMonitorApp\\CeremonyMonitorApp.csproj|solutionrelative:ceremonymonitorapp\\views\\awardeeapproval\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C6631A0-B0E8-4453-A556-5905D7B95A26}|CeremonyMonitorApp\\CeremonyMonitorApp.csproj|d:\\panasonic ceremony monitor - ui design\\ceremonymonitorapp\\ceremonymonitorapp\\controllers\\speechescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C6631A0-B0E8-4453-A556-5905D7B95A26}|CeremonyMonitorApp\\CeremonyMonitorApp.csproj|solutionrelative:ceremonymonitorapp\\controllers\\speechescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\Views\\AwardeeApproval\\Index.cshtml",
+              "RelativeDocumentMoniker": "CeremonyMonitorApp\\Views\\AwardeeApproval\\Index.cshtml",
+              "ToolTip": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\Views\\AwardeeApproval\\Index.cshtml",
+              "RelativeToolTip": "CeremonyMonitorApp\\Views\\AwardeeApproval\\Index.cshtml",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAUwF8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-19T01:51:19.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SpeechesController.cs",
+              "DocumentMoniker": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\Controllers\\SpeechesController.cs",
+              "RelativeDocumentMoniker": "CeremonyMonitorApp\\Controllers\\SpeechesController.cs",
+              "ToolTip": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\Controllers\\SpeechesController.cs",
+              "RelativeToolTip": "CeremonyMonitorApp\\Controllers\\SpeechesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-19T01:49:15.875Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

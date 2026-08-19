@@ -1,0 +1,53 @@
+@model CeremonyMonitorApp.Models.Employee
+
+@{
+    ViewData["Title"] = "Hapus Employee";
+}
+
+<div class="pcm-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="pcm-title text-danger">Konfirmasi Hapus Employee</h1>
+            <p class="pcm-subtitle">Apakah Anda yakin ingin menghapus data karyawan ini dari sistem?</p>
+        </div>
+        <div>
+            <a asp-action="Index" class="btn-pcm-secondary">
+                <i class="bi bi-arrow-left"></i> Batal
+            </a>
+        </div>
+    </div>
+
+    <div class="pcm-card" style="max-width: 640px; border-left: 4px solid #DC2626;">
+        <div class="mb-4">
+            <h4 class="fw-bold text-dark mb-1">@Model.FullName</h4>
+            <div class="text-muted small">ID System: #@Model.Id</div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+                <span class="pcm-label">External ID</span>
+                <div class="fw-semibold text-dark">@(string.IsNullOrEmpty(Model.ExternalID) ? "-" : Model.ExternalID)</div>
+            </div>
+            <div class="col-sm-6">
+                <span class="pcm-label">Jabatan</span>
+                <div class="fw-semibold text-dark">@(string.IsNullOrEmpty(Model.Position) ? "-" : Model.Position)</div>
+            </div>
+            <div class="col-sm-6">
+                <span class="pcm-label">Departemen</span>
+                <div class="fw-semibold text-dark">@(Model.Department != null ? Model.Department.Name : "-")</div>
+            </div>
+        </div>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex gap-3 pt-3 border-top">
+                <button type="submit" class="btn-pcm-cancel">
+                    <i class="bi bi-trash"></i> Ya, Hapus Sekarang
+                </button>
+                <a asp-action="Index" class="btn-pcm-secondary">
+                    Batal
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

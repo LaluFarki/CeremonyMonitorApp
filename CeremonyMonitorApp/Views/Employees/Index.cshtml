@@ -1,0 +1,85 @@
+@model IEnumerable<CeremonyMonitorApp.Models.Employee>
+
+@{
+    ViewData["Title"] = "Master Karyawan";
+}
+
+<div class="pcm-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="pcm-title">Daftar Karyawan (Employees)</h1>
+            <p class="pcm-subtitle">Kelola seluruh data karyawan dan penugasan departemen dalam sistem.</p>
+        </div>
+        <div>
+            <a asp-action="Create" class="btn-pcm-primary">
+                <i class="bi bi-plus-lg"></i> + Tambah Employee Baru
+            </a>
+        </div>
+    </div>
+
+    <div class="pcm-card p-0 overflow-hidden">
+        <table class="pcm-table">
+            <thead>
+                <tr>
+                    <th>External ID</th>
+                    <th>Nama Karyawan</th>
+                    <th>Jabatan</th>
+                    <th>Departemen</th>
+                    <th>Terakhir Synced</th>
+                    <th class="text-end">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="bi bi-people display-6 d-block mb-2"></i>
+                            Belum ada data karyawan. Silakan tambah data baru.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="fw-bold text-dark">@(string.IsNullOrEmpty(item.ExternalID) ? "-" : item.ExternalID)</span>
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark">@item.FullName</div>
+                            </td>
+                            <td>
+                                <span class="text-secondary">@(string.IsNullOrEmpty(item.Position) ? "-" : item.Position)</span>
+                            </td>
+                            <td>
+                                <span class="pcm-badge">
+                                    @(item.Department != null ? item.Department.Name : "Tanpa Dept")
+                                </span>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    @(item.LastSyncedAt.HasValue ? item.LastSyncedAt.Value.ToString("dd MMM yyyy, HH:mm") : "-")
+                                </small>
+                            </td>
+                            <td class="text-end">
+                                <div class="d-inline-flex gap-2">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-pcm-secondary py-1 px-3" style="font-size: 13px;">
+                                        Edit
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn-pcm-secondary py-1 px-3" style="font-size: 13px;">
+                                        Detail
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-pcm-cancel py-1 px-3" style="font-size: 13px;">
+                                        Hapus
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

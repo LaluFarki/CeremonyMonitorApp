@@ -1,0 +1,96 @@
+﻿@model List<Awardee>
+@{
+    ViewData["Title"] = "Awardee Approval";
+    var role = ViewBag.Role as string;
+    var stageLabel = role == "HrAdmin" ? "Tahap Anda: hr_admin_review" : "Tahap Anda: hr_manager_final";
+}
+
+<div class="p-8">
+    <h1 class="text-2xl font-bold text-navy">Awardee Approval</h1>
+    <p class="text-sm text-gray-500 mt-1">@stageLabel — lolos di sini @(role == "HrAdmin" ? "akan lanjut ke HR Manager" : "akan berstatus Approved").</p>
+
+    @if (TempData["RejectError"] != null)
+    {
+        <div class="bg-red-50 text-red-600 text-sm px-4 py-3 rounded mt-4">
+            @TempData["RejectError"]
+        </div>
+    }
+
+    <div class="mt-6 bg-white border rounded-lg overflow-hidden">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-left text-gray-500">
+                <tr>
+                    <th class="px-4 py-3">Karyawan</th>
+                    <th class="px-4 py-3">Departemen</th>
+                    <th class="px-4 py-3">Diajukan</th>
+                    <th class="px-4 py-3">Ceremony</th>
+                    <th class="px-4 py-3">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model)
+                {
+                    <tr class="border-t">
+                        <td class="px-4 py-3">
+                            <div class="font-semibold">@a.Employee?.FullName</div>
+                            <div class="text-gray-500 text-xs">@a.Title</div>
+                        </td>
+                        <td class="px-4 py-3">@a.NominatingDepartment?.Name</td>
+                        <td class="px-4 py-3 text-gray-500">@a.SubmittedAt.ToString("dd MMM yyyy")</td>
+                        <td class="px-4 py-3 text-gray-500">@a.Ceremony?.ScheduledDate.ToString("dd MMM yyyy")</td>
+                        <td class="px-4 py-3">
+                            <button type="button" onclick="openModal(@a.Id, '@a.Employee?.FullName')"
+                                    class="bg-navy text-white text-xs font-semibold px-3 py-1.5 rounded">
+                                Review
+                            </button>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="5" class="px-4 py-6 text-center text-gray-400">Tidak ada nominasi menunggu review.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="reviewModal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+        <h2 class="text-lg font-bold text-navy">Review Nominasi</h2>
+        <p class="text-sm text-gray-500 mt-1" id="modalEmployeeName"></p>
+
+        <form id="modalForm" method="post" class="mt-4">
+            @Html.AntiForgeryToken()
+            <label class="block text-sm font-semibold mb-1">Catatan</label>
+            <textarea name="notes" rows="3" class="w-full border rounded px-3 py-2 text-sm"
+                      placeholder="Wajib diisi kalau menolak, opsional kalau menyetujui..."></textarea>
+
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-500">Batal</button>
+                <button type="submit" formaction="/AwardeeApproval/Reject" id="modalRejectId"
+                        class="px-4 py-2 text-sm border border-red-500 text-red-500 rounded font-semibold">
+                    Tolak
+                </button>
+                <button type="submit" formaction="/AwardeeApproval/Approve" id="modalApproveId"
+                        class="px-4 py-2 text-sm bg-navy text-white rounded font-semibold">
+                    Setujui
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openModal(id, name) {
+        document.getElementById('modalEmployeeName').innerText = name;
+        document.getElementById('modalForm').action = '/AwardeeApproval/Approve/' + id;
+        document.getElementById('modalRejectId').setAttribute('formaction', '/AwardeeApproval/Reject/' + id);
+        document.getElementById('modalApproveId').setAttribute('formaction', '/AwardeeApproval/Approve/' + id);
+        document.getElementById('reviewModal').classList.remove('hidden');
+    }
+    function closeModal() {
+        document.getElementById('reviewModal').classList.add('hidden');
+    }
+</script>

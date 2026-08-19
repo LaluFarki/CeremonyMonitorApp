@@ -1,0 +1,71 @@
+@model CeremonyMonitorApp.Models.Speech
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Speech</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="CeremonyId" class="control-label"></label>
+               <select asp-for="CeremonyId" class="form-control" asp-items="ViewBag.CeremonyId" required>
+                   <option value=" ">----Choose Ceremony</option>
+               </select>
+                <span asp-validation-for="CeremonyId" class="text-danger"></span>
+            </div>
+
+            
+            <div class="form-group">
+                <label asp-for="AttributedToId" class="control-label"></label>
+                <select asp-for="AttributedToId" class="form-control" asp-items="ViewBag.AttributedToId" required>
+                    <option value="">----Choose Attributed To-----</option>
+                </select>
+                <span asp-validation-for="AttributedToId" class="text-danger"></span>
+            </div>
+
+           
+
+            <div class="form-group">
+                <label asp-for="InputById" class="control-label"></label>
+                <select asp-for="InputById" class="form-control" asp-items="ViewBag.InputById" required>
+                    <option value="">----Choose Input By-----</option>
+                </select>
+                <span asp-validation-for="InputById" class="text-danger"></span>
+            </div>
+
+         
+
+            <div class="form-group">
+                <label asp-for="TextJapanaese" class="control-label"></label>
+                <input asp-for="TextJapanaese" class="form-control" />
+                <span asp-validation-for="TextJapanaese" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TextIndonesia" class="control-label"></label>
+                <input asp-for="TextIndonesia" class="form-control" />
+                <span asp-validation-for="TextIndonesia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UpdatedAt" class="control-label"></label>
+                <input asp-for="UpdatedAt" class="form-control" />
+                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
