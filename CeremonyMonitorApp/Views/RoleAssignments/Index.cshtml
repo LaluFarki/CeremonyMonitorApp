@@ -1,65 +1,221 @@
 @model IEnumerable<CeremonyMonitorApp.Models.RoleAssignment>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ceremony Roles";
 }
 
-<h1>Index</h1>
+<!-- Header Halaman -->
+<div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+        <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 mb-1">
+            <a href="/Home/Index" class="hover:text-[#0050A0]">Dashboard</a>
+            <span>/</span>
+            <span class="text-gray-600 font-bold">Role Assignment</span>
+        </div>
+        <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">Ceremony Role Assignment</h1>
+        <p class="text-sm text-gray-500 mt-1">Assign roles and verify staff status for upcoming events.</p>
+    </div>
+    
+    <!-- Ceremony Selector Dropdown -->
+    <div class="flex items-center gap-2.5 bg-white border border-slate-200 px-4 py-2.5 rounded-2xl shadow-sm focus-within:border-[#0050A0] transition-colors duration-150">
+        <i class="bi bi-calendar3 text-[#0050A0] text-sm"></i>
+        <div class="flex flex-col">
+            <span class="text-[9px] font-extrabold text-gray-400 uppercase tracking-wider">Select Ceremony</span>
+            <select id="ceremonySelect" onchange="changeCeremony(this.value)" class="bg-transparent border-none text-xs font-bold text-gray-750 focus:outline-none cursor-pointer pr-6 appearance-none" style="background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23475569%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right center; background-size: 10px;">
+                <option value="1" selected>August 2026 - AC Department</option>
+                <option value="2">September 2026 - Production 1</option>
+                <option value="3">October 2026 - Engineering</option>
+            </select>
+        </div>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CeremonyId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ceremony)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoleType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Submitted)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.CeremonyId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Ceremony)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Employee)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.RoleType)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Submitted)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<!-- Overview Block Cards (Mockup Design) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Block 1: Department & Total Employees -->
+    <div class="bg-white p-6 rounded-3xl border border-slate-100/70 shadow-sm flex flex-col justify-between h-40 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+        <div>
+            <span class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Department</span>
+            <h2 id="overviewDept" class="text-xl font-black text-[#17233F] mt-1">AC Department</h2>
+        </div>
+        <div class="bg-[#EBF3FF] p-3 rounded-2xl border border-blue-100 flex justify-between items-center mt-3">
+            <span class="text-[10px] font-extrabold text-[#0050A0] uppercase tracking-wider">Total Employees</span>
+            <span id="overviewTotalEmp" class="text-base font-black text-[#0050A0]">124</span>
+        </div>
+    </div>
+    
+    <!-- Block 2: Ceremony Date -->
+    <div class="bg-white p-6 rounded-3xl border border-slate-100/70 shadow-sm flex flex-col justify-center h-40 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+        <span class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Ceremony Date</span>
+        <h2 id="overviewDate" class="text-2xl font-black text-[#17233F] mt-2 tracking-tight">27 Aug 2026</h2>
+    </div>
+
+    <!-- Block 3: Status & Role Filled -->
+    <div class="bg-white p-6 rounded-3xl border border-slate-100/70 shadow-sm flex flex-col justify-between h-40 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+        <div>
+            <span class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Status</span>
+            <h2 id="overviewStatus" class="text-xl font-black text-[#17233F] mt-1">Scheduled</h2>
+        </div>
+        <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-100 flex justify-between items-center mt-3">
+            <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-wider">Role Filled</span>
+            <span id="overviewRoleFilled" class="text-base font-black text-emerald-800">5/6</span>
+        </div>
+    </div>
+</div>
+
+<!-- Table Header Label -->
+<div class="mb-4 flex items-center gap-2">
+    <div class="w-1 h-4 bg-[#0050A0] rounded-full"></div>
+    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest">Employee Roster: <span id="rosterTitle" class="text-gray-700">AC Department</span></h3>
+</div>
+
+<!-- Premium Role Assignment Table Card -->
+<div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-8">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50/40 border-b border-slate-100 text-[10px] font-black text-[#17233F] uppercase tracking-wider">
+                    <th class="py-5 px-25">Role</th>
+                    <th class="py-50 px-8">Name</th>
+                    <th class="py-5 px-8">Status</th>
+                    <th class="py-5 px-8 text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody id="roleTableBody" class="divide-y divide-slate-50">
+                <!-- Javascript will populate rows here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Mock Ceremonies Data containing both details and role assignments
+        const mockCeremonies = {
+            "1": {
+                department: "AC Department",
+                totalEmployees: 124,
+                date: "27 Aug 2026",
+                status: "Scheduled",
+                roles: [
+                    { roleKey: "CeremonyCommander", roleName: "Pemimpin Upacara (Ceremony Commander)", employee: "Ahmad Fauzi", status: "Filled", icon: "bi-person-fill-check" },
+                    { roleKey: "Prayer", roleName: "Pembaca Doa (Prayer Reader)", employee: "Siti Rahma", status: "Filled", icon: "bi-journal-text" },
+                    { roleKey: "Pancasila", roleName: "Pembaca Pancasila", employee: "Dewi Lestari", status: "Filled", icon: "bi-blockquote-left" },
+                    { roleKey: "SevenPrinciples", roleName: "Pembaca Panca Setya Korpri", employee: "", status: "Not Yet", icon: "bi-file-earmark-ruled" },
+                    { roleKey: "Mc", roleName: "MC (Master of Ceremony)", employee: "Budi Santoso", status: "Filled", icon: "bi-mic-fill" },
+                    { roleKey: "FlagBearer", roleName: "Pengibar Bendera (Flag Bearer)", employee: "Rian Hidayat", status: "Filled", icon: "bi-flag-fill" }
+                ]
+            },
+            "2": {
+                department: "Production 1",
+                totalEmployees: 189,
+                date: "17 Sep 2026",
+                status: "Scheduled",
+                roles: [
+                    { roleKey: "CeremonyCommander", roleName: "Pemimpin Upacara (Ceremony Commander)", employee: "Dedi Kurniawan", status: "Filled", icon: "bi-person-fill-check" },
+                    { roleKey: "Prayer", roleName: "Pembaca Doa (Prayer Reader)", employee: "", status: "Not Yet", icon: "bi-journal-text" },
+                    { roleKey: "Pancasila", roleName: "Pembaca Pancasila", employee: "", status: "Not Yet", icon: "bi-blockquote-left" },
+                    { roleKey: "SevenPrinciples", roleName: "Pembaca Panca Setya Korpri", employee: "Taufik Hidayat", status: "Filled", icon: "bi-file-earmark-ruled" },
+                    { roleKey: "Mc", roleName: "MC (Master of Ceremony)", employee: "Hendra Wijaya", status: "Filled", icon: "bi-mic-fill" },
+                    { roleKey: "FlagBearer", roleName: "Pengibar Bendera (Flag Bearer)", employee: "Giri Santoso", status: "Filled", icon: "bi-flag-fill" }
+                ]
+            },
+            "3": {
+                department: "Engineering",
+                totalEmployees: 96,
+                date: "19 Oct 2026",
+                status: "Scheduled",
+                roles: [
+                    { roleKey: "CeremonyCommander", roleName: "Pemimpin Upacara (Ceremony Commander)", employee: "Farhan Malik", status: "Filled", icon: "bi-person-fill-check" },
+                    { roleKey: "Prayer", roleName: "Pembaca Doa (Prayer Reader)", employee: "", status: "Not Yet", icon: "bi-journal-text" },
+                    { roleKey: "Pancasila", roleName: "Pembaca Pancasila", employee: "Bayu Adi", status: "Filled", icon: "bi-blockquote-left" },
+                    { roleKey: "SevenPrinciples", roleName: "Pembaca Panca Setya Korpri", employee: "Indra Kusuma", status: "Filled", icon: "bi-file-earmark-ruled" },
+                    { roleKey: "Mc", roleName: "MC (Master of Ceremony)", employee: "", status: "Not Yet", icon: "bi-mic-fill" },
+                    { roleKey: "FlagBearer", roleName: "Pengibar Bendera (Flag Bearer)", employee: "Wawan Setiawan", status: "Filled", icon: "bi-flag-fill" }
+                ]
+            }
+        };
+
+        // DOM elements
+        const overviewDept = document.getElementById("overviewDept");
+        const overviewTotalEmp = document.getElementById("overviewTotalEmp");
+        const overviewDate = document.getElementById("overviewDate");
+        const overviewStatus = document.getElementById("overviewStatus");
+        const overviewRoleFilled = document.getElementById("overviewRoleFilled");
+        const rosterTitle = document.getElementById("rosterTitle");
+        const roleTableBody = document.getElementById("roleTableBody");
+
+        // Load ceremony data and populate UI
+        function loadCeremony(id) {
+            const data = mockCeremonies[id];
+            if (data) {
+                // Update Overview Cards
+                overviewDept.innerText = data.department;
+                overviewTotalEmp.innerText = data.totalEmployees;
+                overviewDate.innerText = data.date;
+                overviewStatus.innerText = data.status;
+                rosterTitle.innerText = data.department;
+
+                // Calculate role fill counts
+                const total = data.roles.length;
+                const filled = data.roles.filter(r => r.status === "Filled").length;
+                overviewRoleFilled.innerText = `${filled}/${total}`;
+
+                // Populate Table Rows
+                roleTableBody.innerHTML = "";
+                data.roles.forEach((role) => {
+                    const row = document.createElement("tr");
+                    row.className = "hover:bg-slate-50/70 border-b border-slate-100 text-xs font-semibold text-gray-700 transition duration-150";
+
+                    // Status Badge styling (using elegant custom colors & pulsing status dot)
+                    const statusHtml = role.status === "Filled"
+                        ? `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            Filled
+                           </span>`
+                        : `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-500/10 text-rose-600 border border-rose-500/20 animate-pulse">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                            Not Yet
+                           </span>`;
+
+                    // Name Column display (plain name text)
+                    const employeeName = role.employee 
+                        ? `<span class="text-gray-800 font-extrabold text-xs tracking-tight">${role.employee}</span>` 
+                        : `<span class="text-gray-300 font-extrabold text-xs">-</span>`;
+
+                    // Role Icon picker
+                    const roleIcon = role.icon ? `<i class="bi ${role.icon} text-lg text-[#0050A0] shrink-0"></i>` : `<i class="bi bi-person-fill text-lg text-slate-400 shrink-0"></i>`;
+
+                    row.innerHTML = `
+                        <!-- Role -->
+                        <td class="py-5 px-8">
+                            <div class="flex items-center gap-3">
+                                ${roleIcon}
+                                <span class="font-bold text-gray-800 tracking-tight text-xs">${role.roleName}</span>
+                            </div>
+                        </td>
+                        <!-- Name -->
+                        <td class="py-5 px-8">${employeeName}</td>
+                        <!-- Status -->
+                        <td class="py-5 px-8">${statusHtml}</td>
+                        <!-- Action (Read-only Indicator lock) -->
+                        <td class="py-5 px-8 text-center">
+                            <div class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 shadow-sm" title="Read-Only (PF Access Only)">
+                                <i class="bi bi-lock-fill text-xs"></i>
+                            </div>
+                        </td>
+                    `;
+                    roleTableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Dropdown selection change
+        function changeCeremony(value) {
+            loadCeremony(value);
+        }
+
+        // Initial Load
+        loadCeremony("1");
+    </script>
 }
-    </tbody>
-</table>

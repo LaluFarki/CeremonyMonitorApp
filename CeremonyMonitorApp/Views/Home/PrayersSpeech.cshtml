@@ -1,7 +1,222 @@
 @{
-    ViewData["Title"] = "Prayers & Speech";
+    ViewData["Title"] = "Create Prayer";
 }
-<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
-    <h1 class="text-2xl font-bold text-[#17233F]">Prayers & Speech Texts</h1>
-    <p class="text-gray-500 mt-2">Placeholder for Prayers & Speech UI</p>
+
+<!-- Header Halaman -->
+<div class="mb-8">
+    <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 mb-1">
+        <a href="/Home/Index" class="hover:text-[#0050A0]">Dashboard</a>
+        <span>/</span>
+        <span class="text-gray-600">Create Prayer</span>
+    </div>
+    <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">Create Prayer Speech</h1>
+    <p class="text-sm text-gray-500 mt-1">Draft a formal prayer speech for corporate ceremony monitoring.</p>
 </div>
+
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Left Column: Editor (Spans 8 cols) -->
+    <div class="lg:col-span-8 space-y-6">
+        
+        <!-- Details Card -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-5">
+            <h2 class="text-base font-extrabold text-gray-800 flex items-center gap-2">
+                <i class="bi bi-file-earmark-text text-[#0050A0]"></i> Speech Prayer Detail
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Title Input -->
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Prayer Title</label>
+                    <input type="text" id="prayerTitle" class="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-[#0050A0] transition-colors duration-150 font-bold text-gray-700" placeholder="e.g. Al-Kursi Prayer" />
+                </div>
+                
+                <!-- Subtitle Input -->
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Prayer Sub-Title</label>
+                    <input type="text" id="prayerSubtitle" class="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-[#0050A0] transition-colors duration-150 font-semibold text-gray-600" placeholder="e.g. Become the greatest human" />
+                </div>
+                
+                <!-- Ceremony Date Dropdown -->
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Ceremony Date</label>
+                    <select id="ceremonyDate" class="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl bg-white focus:outline-none focus:border-[#0050A0] transition-colors duration-150 font-bold text-gray-700 cursor-pointer">
+                        <option value="18 June 2026">18 June 2026</option>
+                        <option value="17 July 2026">17 July 2026</option>
+                        <option value="27 August 2026">27 August 2026</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Editor Card -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <div class="space-y-1.5">
+                <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">Prayer Content</label>
+                <textarea id="prayerContent" class="w-full h-80 px-5 py-4 text-sm border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] transition-all duration-150 resize-none font-medium text-gray-700 leading-relaxed" placeholder="Type your prayer content here..."></textarea>
+            </div>
+            
+            <!-- Bottom Buttons -->
+            <div class="flex justify-end gap-3 pt-2">
+                <!-- Save Button -->
+                <button onclick="savePrayer()" class="bg-[#0050A0] hover:bg-[#003d7a] text-white font-bold py-2.5 px-6 rounded-xl text-xs flex items-center gap-2 shadow-sm transition duration-150">
+                    <i class="bi bi-floppy"></i> Save
+                </button>
+                <!-- Upload Button -->
+                <button onclick="uploadPrayer()" class="bg-[#0050A0] hover:bg-[#003d7a] text-white font-bold py-2.5 px-6 rounded-xl text-xs flex items-center gap-2 shadow-sm transition duration-150">
+                    <i class="bi bi-cloud-upload"></i> Upload
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Right Column: History Sidebar (Spans 4 cols) -->
+    <div class="lg:col-span-4 space-y-4">
+        
+        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <!-- Sidebar Header -->
+            <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center text-[#0050A0]">
+                    <i class="bi bi-clock-history text-sm"></i>
+                </div>
+                <h3 class="text-sm font-extrabold text-gray-800">Previous Prayer</h3>
+            </div>
+            
+            <!-- Sidebar List -->
+            <div class="p-4 space-y-3 max-h-[500px] overflow-y-auto">
+                
+                <!-- Mock Past Prayers -->
+                <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-slate-100/50 transition duration-150 flex justify-between items-center gap-3">
+                    <div class="min-w-0">
+                        <h4 class="text-xs font-bold text-gray-800 truncate">Annual Prayer 2025</h4>
+                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5 truncate">Used August 2025</p>
+                    </div>
+                    <button onclick="reuseTemplate(1)" class="bg-[#0050A0] hover:bg-[#003d7a] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition duration-150 shrink-0">
+                        Reuse
+                    </button>
+                </div>
+
+                <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-slate-100/50 transition duration-150 flex justify-between items-center gap-3">
+                    <div class="min-w-0">
+                        <h4 class="text-xs font-bold text-gray-800 truncate">Regular Monthly Prayer</h4>
+                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5 truncate">Used July 2025</p>
+                    </div>
+                    <button onclick="reuseTemplate(2)" class="bg-[#0050A0] hover:bg-[#003d7a] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition duration-150 shrink-0">
+                        Reuse
+                    </button>
+                </div>
+
+                <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-slate-100/50 transition duration-150 flex justify-between items-center gap-3">
+                    <div class="min-w-0">
+                        <h4 class="text-xs font-bold text-gray-800 truncate">Safety First Prayer</h4>
+                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5 truncate">Used June 2025</p>
+                    </div>
+                    <button onclick="reuseTemplate(3)" class="bg-[#0050A0] hover:bg-[#003d7a] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition duration-150 shrink-0">
+                        Reuse
+                    </button>
+                </div>
+
+                <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-slate-100/50 transition duration-150 flex justify-between items-center gap-3">
+                    <div class="min-w-0">
+                        <h4 class="text-xs font-bold text-gray-800 truncate">Panasonic Anniversary Prayer</h4>
+                        <p class="text-[10px] text-gray-400 font-semibold mt-0.5 truncate">Used Anniversary 2024</p>
+                    </div>
+                    <button onclick="reuseTemplate(4)" class="bg-[#0050A0] hover:bg-[#003d7a] text-white text-[10px] font-bold px-3 py-1.5 rounded-lg transition duration-150 shrink-0">
+                        Reuse
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
+<!-- Alert Banner Notification (Hidden by default) -->
+<div id="toastNotification" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="bi bi-check-circle-fill text-emerald-500 text-sm"></i>
+    <span id="toastMessage">Template applied successfully!</span>
+</div>
+
+@section Scripts {
+    <script>
+        // Mock Past Prayers Database
+        const previousPrayers = {
+            "1": {
+                title: "Annual Prayer 2025",
+                subtitle: "Used August 2025",
+                content: "Yaa Allah, Yaa Tuhan Yang Maha Pengasih,\n\nDengan memanjatkan puji dan syukur kehadirat-Mu, pada upacara hari ini kami segenap karyawan Panasonic memohon limpahan kesehatan, keselamatan kerja, serta petunjuk dalam menjalankan tugas kami sehari-hari.\n\nSemoga kami senantiasa mampu memberikan dedikasi terbaik bagi kemajuan perusahaan dan kesejahteraan bersama.\n\nAmin."
+            },
+            "2": {
+                title: "Regular Monthly Prayer",
+                subtitle: "Used July 2025",
+                content: "Yaa Tuhan Kami,\n\nBimbinglah langkah kami di bulan Juli ini agar penuh kejujuran, integritas, dan semangat kerja sama yang tinggi. Berikanlah kemudahan bagi proses manufaktur kami dan jauhkanlah kami dari mara bahaya.\n\nAmin."
+            },
+            "3": {
+                title: "Safety First Prayer",
+                subtitle: "Used June 2025",
+                content: "Yaa Allah, Pelindung segenap jiwa,\n\nKami berdoa memohon perlindungan khusus bagi keselamatan seluruh rekan kerja kami di area pabrik, perakitan, dan Engineering. Jadikanlah keselamatan kerja sebagai prioritas utama dan kesadaran bersama kami.\n\nAmin."
+            },
+            "4": {
+                title: "Panasonic Anniversary Prayer",
+                subtitle: "Used Anniversary 2024",
+                content: "Yaa Tuhan Maha Esa,\n\nPada hari jadi Panasonic yang penuh rahmat ini, kami bersyukur atas bertahun-tahun pencapaian dan kontribusi sosial yang telah kami berikan. Bimbinglah kami untuk terus mengabdi bagi masyarakat global sesuai dengan filosofi pendiri perusahaan kami.\n\nAmin."
+            }
+        };
+
+        // DOM elements
+        const prayerTitle = document.getElementById("prayerTitle");
+        const prayerSubtitle = document.getElementById("prayerSubtitle");
+        const prayerContent = document.getElementById("prayerContent");
+        const toast = document.getElementById("toastNotification");
+        const toastMessage = document.getElementById("toastMessage");
+
+        // Load Initial Form Data
+        function initForm() {
+            prayerTitle.value = "Al-Kursi Prayer";
+            prayerSubtitle.value = "Become the greatest human";
+            prayerContent.value = "Yaa Allah, Yaa Tuhan Kami,\n\nPada hari ini, kami segenap karyawan Panasonic berkumpul di lapangan untuk melaksanakan upacara rutin bulanan. Limpahkanlah rahmat, kesehatan, dan keselamatan kerja bagi kami semua.\n\nBerikanlah kelancaran bagi proses produksi kami, dan bimbinglah kami agar senantiasa bekerja dengan integritas, kerja sama, dan dedikasi yang tinggi.\n\nAmin.";
+        }
+
+        // Reuse Button Handler
+        function reuseTemplate(id) {
+            const data = previousPrayers[id];
+            if (data) {
+                // Apply values to inputs with smooth replacement
+                prayerTitle.value = data.title;
+                prayerSubtitle.value = data.subtitle;
+                prayerContent.value = data.content;
+
+                // Show notification
+                showToast(`Template "${data.title}" loaded successfully!`);
+            }
+        }
+
+        // Action Handlers
+        function savePrayer() {
+            showToast("Prayer saved successfully!");
+        }
+
+        function uploadPrayer() {
+            showToast("Prayer uploaded to tablet live!");
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            toastMessage.innerText = message;
+            toast.classList.remove("translate-y-20", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-20", "opacity-0");
+            }, 3000);
+        }
+
+        // Run Init
+        initForm();
+    </script>
+}

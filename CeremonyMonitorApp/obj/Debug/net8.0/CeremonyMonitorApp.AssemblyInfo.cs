@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CeremonyMonitorApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb0c0a29fc1dc08656cfb278330be5eed012e691")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c311636b7d62d8e72a790ec231faad66f3ad8835")]
 [assembly: System.Reflection.AssemblyProductAttribute("CeremonyMonitorApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CeremonyMonitorApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

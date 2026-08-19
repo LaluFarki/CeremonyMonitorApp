@@ -14,15 +14,16 @@
         <p class="text-sm text-gray-500 mt-1">Manage MC checklist sequences. Changes sync instantly to the MC's tablet.</p>
     </div>
     
-    <!-- Active Ceremony Banner -->
-    <div class="flex items-center gap-3 bg-emerald-50 border border-emerald-100 px-4 py-2.5 rounded-2xl">
-        <span class="relative flex h-2.5 w-2.5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-        </span>
-        <div class="text-xs">
-            <p class="font-extrabold text-emerald-800">August 2026 Ceremony</p>
-            <p class="text-[10px] text-emerald-600">AC Department • 27 Aug 2026</p>
+    <!-- Ceremony Selector Dropdown -->
+    <div class="flex items-center gap-2.5 bg-white border border-slate-200 px-4 py-2 rounded-2xl shadow-sm focus-within:border-[#0050A0] transition-colors duration-150">
+        <i class="bi bi-calendar3 text-[#0050A0] text-sm"></i>
+        <div class="flex flex-col">
+            <span class="text-[9px] font-extrabold text-gray-400 uppercase tracking-wider">Select Ceremony</span>
+            <select id="ceremonySelect" onchange="changeCeremony(this.value)" class="bg-transparent border-none text-xs font-bold text-gray-700 focus:outline-none cursor-pointer pr-6 appearance-none" style="background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23475569%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right center; background-size: 10px;">
+                <option value="1" selected>August 2026 - AC Department</option>
+                <option value="2">September 2026 - Production 1</option>
+                <option value="3">October 2026 - Engineering</option>
+            </select>
         </div>
     </div>
 </div>
@@ -100,8 +101,8 @@
 
                 <!-- Screen Header Area -->
                 <div class="bg-white border-b border-slate-200 px-5 py-4">
-                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-wide">August Ceremony Checklist</h4>
-                    <p class="text-[10px] text-slate-400 font-bold mt-0.5">AC Department • 27 Aug 2026</p>
+                    <h4 id="tabletScreenHeaderTitle" class="text-xs font-black text-slate-800 uppercase tracking-wide">August Ceremony Checklist</h4>
+                    <p id="tabletScreenHeaderDate" class="text-[10px] text-slate-400 font-bold mt-0.5">AC Department • 27 Aug 2026</p>
                 </div>
 
                 <!-- Screen Content Area -->
@@ -134,14 +135,42 @@
 
 @section Scripts {
     <script>
-        // Mock Checklist Data
-        let checklistItems = [
-            { id: 1, text: "Pengecekan sound system & mikrofon di lapangan", category: "Persiapan" },
-            { id: 2, text: "Kesiapan barisan peserta upacara tiap departemen", category: "Persiapan" },
-            { id: 3, text: "Pembina upacara memasuki lapangan & mimbar upacara", category: "Acara Inti" },
-            { id: 4, text: "Menyanyikan lagu kebangsaan Indonesia Raya", category: "Acara Inti" },
-            { id: 5, text: "Pembacaan doa oleh petugas penutup upacara", category: "Penutup" }
-        ];
+        // Mock Ceremonies Database
+        const mockCeremonies = {
+            "1": {
+                title: "August Ceremony Checklist",
+                dateInfo: "AC Department • 27 Aug 2026",
+                items: [
+                    { id: 1, text: "Pengecekan sound system & mikrofon di lapangan", category: "Persiapan" },
+                    { id: 2, text: "Kesiapan barisan peserta upacara tiap departemen", category: "Persiapan" },
+                    { id: 3, text: "Pembina upacara memasuki lapangan & mimbar upacara", category: "Acara Inti" },
+                    { id: 4, text: "Menyanyikan lagu kebangsaan Indonesia Raya", category: "Acara Inti" },
+                    { id: 5, text: "Pembacaan doa oleh petugas penutup upacara", category: "Penutup" }
+                ]
+            },
+            "2": {
+                title: "September Ceremony Checklist",
+                dateInfo: "Production 1 • 17 Sep 2026",
+                items: [
+                    { id: 10, text: "Pengecekan bendera dan tiang bendera", category: "Persiapan" },
+                    { id: 11, text: "Pembacaan teks Pancasila oleh pembina upacara", category: "Acara Inti" },
+                    { id: 12, text: "Pembacaan teks Pembukaan UUD 1945", category: "Acara Inti" },
+                    { id: 13, text: "Laporan pemimpin upacara kepada pembina", category: "Acara Inti" }
+                ]
+            },
+            "3": {
+                title: "October Ceremony Checklist",
+                dateInfo: "Engineering • 19 Oct 2026",
+                items: [
+                    { id: 20, text: "Pengecekan naskah pidato sacho di podium", category: "Persiapan" },
+                    { id: 21, text: "Pemberian penghargaan (Awarding) karyawan berprestasi", category: "Acara Inti" },
+                    { id: 22, text: "Menyanyikan Mars Panasonic secara bersama", category: "Acara Inti" }
+                ]
+            }
+        };
+
+        // Active Checklist Data
+        let checklistItems = JSON.parse(JSON.stringify(mockCeremonies["1"].items));
 
         // Tablet checked state cache (Practice mode centang)
         let checkedStates = {};
@@ -215,7 +244,7 @@
                         <span class="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-slate-100 border border-slate-200 text-slate-500 mr-1.5 ${
                             isChecked ? 'opacity-50' : ''
                         }">${item.category}</span>
-                        <p class="text-[11px] font-semibold mt-0.5 inline-block leading-snug ${isChecked ? 'line-through opacity-50' : ''}">${item.text}</p>
+                        <p class="text-[11px] font-semibold mt-0.5 block break-all leading-snug ${isChecked ? 'line-through opacity-50' : ''}">${item.text}</p>
                     </div>
                 `;
                 tabletChecklistContainer.appendChild(itemDiv);
@@ -248,6 +277,17 @@
         function toggleTabletCheckbox(id) {
             checkedStates[id] = !checkedStates[id];
             renderTabletOnly();
+        }
+
+        function changeCeremony(value) {
+            const data = mockCeremonies[value];
+            if (data) {
+                document.getElementById("tabletScreenHeaderTitle").innerText = data.title;
+                document.getElementById("tabletScreenHeaderDate").innerText = data.dateInfo;
+                checklistItems = JSON.parse(JSON.stringify(data.items));
+                checkedStates = {};
+                renderAll();
+            }
         }
 
         // Initialize Render
