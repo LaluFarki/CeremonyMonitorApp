@@ -1,0 +1,12 @@
+# IDE / Editor
+.vs/
+.vscode/
+
+# Build Output
+bin/
+obj/
+node_modules/
+
+# User-specific Files
+*.user
+*.suo
