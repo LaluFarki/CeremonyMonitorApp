@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "MC Checklist & Doa";
+    ViewData["Title"] = "MC Checklist";
 }
 
 <!-- Header Halaman -->
@@ -8,10 +8,10 @@
         <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 mb-1">
             <a href="/Home/Index" class="hover:text-[#0050A0]">Dashboard</a>
             <span>/</span>
-            <span class="text-gray-600">MC Checklist & Doa</span>
+            <span class="text-gray-600">MC Checklist</span>
         </div>
-        <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">MC Checklist & Doa</h1>
-        <p class="text-sm text-gray-500 mt-1">Manage MC checklist sequences and prayer texts. Changes sync instantly to tablets.</p>
+        <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">MC Checklist</h1>
+        <p class="text-sm text-gray-500 mt-1">Manage MC checklist sequences. Changes sync instantly to the MC's tablet.</p>
     </div>
     
     <!-- Active Ceremony Banner -->
@@ -33,35 +33,20 @@
     <!-- Left Column: Editor Panel (Spans 7 cols) -->
     <div class="lg:col-span-7 space-y-6">
         
-        <!-- Tab Control for Editor -->
         <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-6">
             <div class="flex border-b border-slate-100 pb-3 justify-between items-center">
                 <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                    <i class="bi bi-pencil-square text-[#0050A0]"></i> Checklist & Doa Editor
+                    <i class="bi bi-list-check text-[#0050A0]"></i> Checklist Sequence Manager
                 </h2>
                 <span class="text-xs font-extrabold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full flex items-center gap-1">
                     <i class="bi bi-cloud-check-fill"></i> Live Synced
                 </span>
             </div>
 
-            <!-- Prayer Text Editor -->
-            <div class="space-y-2">
-                <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Teks Doa (Prayer Text)</label>
-                <textarea id="prayerInput" class="w-full h-36 px-4 py-3 text-sm border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] transition-colors duration-150 resize-none font-medium text-gray-700 leading-relaxed" placeholder="Tulis teks doa di sini...">Yaa Allah, Yaa Tuhan Kami,
-
-Pada hari ini, kami segenap karyawan Panasonic berkumpul di lapangan untuk melaksanakan upacara rutin bulanan. Limpahkanlah rahmat, kesehatan, dan keselamatan kerja bagi kami semua.
-
-Berikanlah kelancaran bagi proses produksi kami, dan bimbinglah kami agar senantiasa bekerja dengan integritas, kerja sama, dan dedikasi yang tinggi untuk perusahaan dan masyarakat.
-
-Amin.</textarea>
-            </div>
-
-            <hr class="border-slate-100 my-6" />
-
             <!-- MC Checklist Items Editor -->
             <div class="space-y-4">
                 <div class="flex justify-between items-center">
-                    <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">MC Checklist Items</label>
+                    <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Checklist Items</label>
                     <span class="text-xs text-gray-400 font-semibold" id="itemCount">5 Items</span>
                 </div>
 
@@ -79,7 +64,7 @@ Amin.</textarea>
                 </div>
 
                 <!-- Checklist Items List -->
-                <div id="checklistEditorContainer" class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                <div id="checklistEditorContainer" class="space-y-2 max-h-[420px] overflow-y-auto pr-1">
                     <!-- Javascript will populate items here -->
                 </div>
             </div>
@@ -114,19 +99,9 @@ Amin.</textarea>
                 </div>
 
                 <!-- Screen Header Area -->
-                <div class="bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center">
-                    <div>
-                        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wide">August Ceremony</h4>
-                        <p class="text-[10px] text-slate-400 font-bold">AC Department • 27 Aug 2026</p>
-                    </div>
-                    <div class="flex gap-1.5">
-                        <button id="tabBtnChecklist" onclick="switchTabletTab('checklist')" class="bg-[#EBF3FF] text-[#0050A0] text-[10px] font-extrabold px-3 py-1.5 rounded-lg transition duration-150">
-                            Checklist
-                        </button>
-                        <button id="tabBtnDoa" onclick="switchTabletTab('doa')" class="text-slate-500 hover:bg-slate-100 text-[10px] font-extrabold px-3 py-1.5 rounded-lg transition duration-150">
-                            Teks Doa
-                        </button>
-                    </div>
+                <div class="bg-white border-b border-slate-200 px-5 py-4">
+                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-wide">August Ceremony Checklist</h4>
+                    <p class="text-[10px] text-slate-400 font-bold mt-0.5">AC Department • 27 Aug 2026</p>
                 </div>
 
                 <!-- Screen Content Area -->
@@ -135,11 +110,6 @@ Amin.</textarea>
                     <!-- Tablet Checklist Content -->
                     <div id="tabletChecklistContainer" class="space-y-2">
                         <!-- Javascript will render checklist here -->
-                    </div>
-
-                    <!-- Tablet Doa Content (Hidden by default) -->
-                    <div id="tabletDoaContainer" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm leading-relaxed text-sm text-gray-700 whitespace-pre-wrap font-medium h-full overflow-y-auto">
-                        <!-- Javascript will sync prayer text here -->
                     </div>
 
                 </div>
@@ -177,8 +147,6 @@ Amin.</textarea>
         let checkedStates = {};
 
         // DOM elements
-        const prayerInput = document.getElementById("prayerInput");
-        const tabletDoaContainer = document.getElementById("tabletDoaContainer");
         const checklistEditorContainer = document.getElementById("checklistEditorContainer");
         const tabletChecklistContainer = document.getElementById("tabletChecklistContainer");
         const itemCountEl = document.getElementById("itemCount");
@@ -198,9 +166,6 @@ Amin.</textarea>
             // Update counts
             itemCountEl.innerText = `${checklistItems.length} Items`;
 
-            // Update Doa text on Tablet
-            tabletDoaContainer.innerText = prayerInput.value;
-
             // Render Editor Items
             checklistEditorContainer.innerHTML = "";
             checklistItems.forEach((item, index) => {
@@ -216,45 +181,13 @@ Amin.</textarea>
             });
 
             // Render Tablet Items
-            tabletChecklistContainer.innerHTML = "";
-            checklistItems.forEach((item) => {
-                const isChecked = checkedStates[item.id] || false;
-                const itemDiv = document.createElement("div");
-                itemDiv.className = `flex items-start gap-2.5 p-3 rounded-xl border transition-all duration-200 cursor-pointer ${
-                    isChecked 
-                    ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-800" 
-                    : "bg-white border-slate-200 text-slate-700 hover:border-slate-350"
-                }`;
-                itemDiv.onclick = () => toggleTabletCheckbox(item.id);
-                itemDiv.innerHTML = `
-                    <div class="mt-0.5 w-4.5 h-4.5 rounded-md border flex items-center justify-center text-xs transition duration-150 ${
-                        isChecked 
-                        ? "bg-emerald-500 border-emerald-500 text-white" 
-                        : "border-slate-300 bg-white"
-                    }">
-                        ${isChecked ? '<i class="bi bi-check-lg text-[10px] font-black"></i>' : ''}
-                    </div>
-                    <div class="flex-grow">
-                        <span class="text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-slate-100 border border-slate-200 text-slate-500 mr-1.5 ${
-                            isChecked ? 'opacity-50' : ''
-                        }">${item.category}</span>
-                        <p class="text-[11px] font-semibold mt-0.5 inline-block leading-snug ${isChecked ? 'line-through opacity-50' : ''}">${item.text}</p>
-                    </div>
-                `;
-                tabletChecklistContainer.appendChild(itemDiv);
-            });
+            renderTabletOnly();
         }
-
-        // Input handlers
-        prayerInput.addEventListener("input", () => {
-            tabletDoaContainer.innerText = prayerInput.value;
-        });
 
         function updateItemText(id, newText) {
             const item = checklistItems.find(i => i.id === id);
             if (item) {
                 item.text = newText;
-                // Re-render tablet view only to maintain focus in input
                 renderTabletOnly();
             }
         }
@@ -315,24 +248,6 @@ Amin.</textarea>
         function toggleTabletCheckbox(id) {
             checkedStates[id] = !checkedStates[id];
             renderTabletOnly();
-        }
-
-        // Tablet Tab Navigation
-        function switchTabletTab(tab) {
-            const btnChecklist = document.getElementById("tabBtnChecklist");
-            const btnDoa = document.getElementById("tabBtnDoa");
-
-            if (tab === 'checklist') {
-                tabletChecklistContainer.classList.remove("hidden");
-                tabletDoaContainer.classList.add("hidden");
-                btnChecklist.className = "bg-[#EBF3FF] text-[#0050A0] text-[10px] font-extrabold px-3 py-1.5 rounded-lg transition duration-150";
-                btnDoa.className = "text-slate-500 hover:bg-slate-100 text-[10px] font-extrabold px-3 py-1.5 rounded-lg transition duration-150";
-            } else {
-                tabletChecklistContainer.classList.add("hidden");
-                tabletDoaContainer.classList.remove("hidden");
-                btnDoa.className = "bg-[#EBF3FF] text-[#0050A0] text-[10px] font-extrabold px-3 py-1.5 rounded-lg transition duration-150";
-                btnChecklist.className = "text-slate-500 hover:bg-slate-100 text-[10px] font-extrabold px-3 py-1.5 rounded-lg transition duration-150";
-            }
         }
 
         // Initialize Render
