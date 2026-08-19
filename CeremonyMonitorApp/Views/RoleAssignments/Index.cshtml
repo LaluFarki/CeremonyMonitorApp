@@ -75,10 +75,10 @@
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-slate-50/40 border-b border-slate-100 text-[10px] font-black text-[#17233F] uppercase tracking-wider">
-                    <th class="py-5 px-25">Role</th>
-                    <th class="py-50 px-8">Name</th>
-                    <th class="py-5 px-8">Status</th>
-                    <th class="py-5 px-8 text-center">Action</th>
+                    <th class="py-4 px-8 align-middle">Role</th>
+                    <th class="py-4 px-8 align-middle">Name</th>
+                    <th class="py-4 px-8 align-middle">Status</th>
+                    <th class="py-4 px-8 text-center align-middle">Action</th>
                 </tr>
             </thead>
             <tbody id="roleTableBody" class="divide-y divide-slate-50">
@@ -188,18 +188,18 @@
 
                     row.innerHTML = `
                         <!-- Role -->
-                        <td class="py-5 px-8">
+                        <td class="py-5 px-8 align-middle">
                             <div class="flex items-center gap-3">
                                 ${roleIcon}
                                 <span class="font-bold text-gray-800 tracking-tight text-xs">${role.roleName}</span>
                             </div>
                         </td>
                         <!-- Name -->
-                        <td class="py-5 px-8">${employeeName}</td>
+                        <td class="py-5 px-8 align-middle">${employeeName}</td>
                         <!-- Status -->
-                        <td class="py-5 px-8">${statusHtml}</td>
+                        <td class="py-5 px-8 align-middle">${statusHtml}</td>
                         <!-- Action (Read-only Indicator lock) -->
-                        <td class="py-5 px-8 text-center">
+                        <td class="py-5 px-8 text-center align-middle">
                             <div class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-slate-100 text-slate-400 border border-slate-200 shadow-sm" title="Read-Only (PF Access Only)">
                                 <i class="bi bi-lock-fill text-xs"></i>
                             </div>
