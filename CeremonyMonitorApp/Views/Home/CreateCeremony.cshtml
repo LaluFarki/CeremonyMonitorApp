@@ -1,7 +1,446 @@
 @{
     ViewData["Title"] = "Create Ceremony";
 }
-<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
-    <h1 class="text-2xl font-bold text-[#17233F]">Create New Ceremony</h1>
-    <p class="text-gray-500 mt-2">Placeholder for Ceremony Creation wizard</p>
+
+<!-- Header Halaman -->
+<div class="mb-8">
+    <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 mb-1">
+        <a href="/Home/Index" class="hover:text-[#0050A0]">Dashboard</a>
+        <span>/</span>
+        <span class="text-gray-600 font-bold">New Ceremony Wizard</span>
+    </div>
+    <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">Create New Ceremony</h1>
+    <p class="text-sm text-gray-500 mt-1">Set up ceremony schedule, initialize MC checklist, and define prayer texts.</p>
 </div>
+
+<!-- Step Progress Indicator -->
+<div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm mb-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 max-w-3xl mx-auto">
+        <!-- Step 1 Indicator -->
+        <div class="flex items-center gap-3" id="indicatorStep1">
+            <div class="w-8 h-8 rounded-full bg-[#0050A0] text-white font-bold flex items-center justify-center text-sm shadow-md transition-all duration-300 ring-4 ring-blue-50" id="badgeStep1">1</div>
+            <div>
+                <p class="text-xs font-black text-gray-800">Schedule & BU</p>
+                <p class="text-[9px] text-gray-400 font-bold">Select Date & Dept</p>
+            </div>
+        </div>
+
+        <!-- Connector Line 1 -->
+        <div class="hidden md:block flex-grow h-0.5 bg-slate-100 mx-4" id="lineStep1"></div>
+
+        <!-- Step 2 Indicator -->
+        <div class="flex items-center gap-3 opacity-50 transition-opacity duration-300" id="indicatorStep2">
+            <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 font-bold flex items-center justify-center text-sm transition-all duration-300" id="badgeStep2">2</div>
+            <div>
+                <p class="text-xs font-black text-gray-800">MC Rundown</p>
+                <p class="text-[9px] text-gray-400 font-bold">Set Checklist Items</p>
+            </div>
+        </div>
+
+        <!-- Connector Line 2 -->
+        <div class="hidden md:block flex-grow h-0.5 bg-slate-100 mx-4" id="lineStep2"></div>
+
+        <!-- Step 3 Indicator -->
+        <div class="flex items-center gap-3 opacity-50 transition-opacity duration-300" id="indicatorStep3">
+            <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 font-bold flex items-center justify-center text-sm transition-all duration-300" id="badgeStep3">3</div>
+            <div>
+                <p class="text-xs font-black text-gray-800">Prayer Text</p>
+                <p class="text-[9px] text-gray-400 font-bold">Input Official Prayer</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Wizard Step Panel Container -->
+<div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-8">
+    
+    <!-- STEP 1 PANEL -->
+    <div id="panelStep1" class="p-8 space-y-6 transition-all duration-300">
+        <div class="border-b border-slate-100 pb-3">
+            <h2 class="text-base font-extrabold text-gray-800 flex items-center gap-2">
+                <i class="bi bi-calendar-plus text-[#0050A0]"></i> Step 1: Setup Schedule & Department
+            </h2>
+            <p class="text-[11px] text-gray-400 font-semibold mt-1">Specify when the ceremony will occur and which business unit department will lead it.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+            <!-- Ceremony Date -->
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Ceremony Date</label>
+                <input type="date" id="inputDate" class="w-full px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] text-sm font-bold text-gray-700 cursor-pointer" />
+            </div>
+
+            <!-- Executing Department -->
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Executing Department</label>
+                <select id="inputDept" class="w-full px-4 py-3 border border-slate-200 rounded-2xl bg-white focus:outline-none focus:border-[#0050A0] text-sm font-bold text-gray-700 cursor-pointer">
+                    <option value="AC Department">AC Department</option>
+                    <option value="Production 1">Production 1</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Refrigeration">Refrigeration</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 bg-blue-50 p-4 rounded-2xl border border-blue-100 max-w-3xl text-xs text-gray-500 font-semibold leading-relaxed">
+            <i class="bi bi-info-circle text-[#0050A0] text-lg shrink-0"></i>
+            <p>After finalizing, the Personal Factory (PF) of the selected department will be automatically requested via email to assign officers (MC, Prayer, Dirigen, etc.) and nominate awardees.</p>
+        </div>
+    </div>
+
+    <!-- STEP 2 PANEL (Hidden by default) -->
+    <div id="panelStep2" class="p-8 space-y-6 hidden transition-all duration-300">
+        <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
+            <div>
+                <h2 class="text-base font-extrabold text-gray-800 flex items-center gap-2">
+                    <i class="bi bi-list-check text-[#0050A0]"></i> Step 2: MC Checklist Rundown Setup
+                </h2>
+                <p class="text-[11px] text-gray-400 font-semibold mt-1">Standard Panasonic ceremony steps are loaded by default. You can modify them or add new ones.</p>
+            </div>
+            <span class="text-xs text-gray-400 font-bold" id="wizardItemCount">5 Items</span>
+        </div>
+
+        <div class="max-w-3xl space-y-5">
+            <!-- Add Item Form -->
+            <div class="flex gap-2">
+                <input type="text" id="wizardNewItemInput" class="flex-grow px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-[#0050A0]" placeholder="Add a custom step..." />
+                <select id="wizardNewItemCategory" class="px-3 py-2.5 text-xs font-bold border border-slate-200 rounded-xl bg-gray-50 focus:outline-none text-gray-650">
+                    <option value="Persiapan">Persiapan</option>
+                    <option value="Acara Inti">Acara Inti</option>
+                    <option value="Penutup">Penutup</option>
+                </select>
+                <button onclick="addWizardChecklistItem()" class="bg-[#0050A0] hover:bg-[#003d7a] text-white px-4 rounded-xl text-xs font-bold flex items-center justify-center">
+                    <i class="bi bi-plus-lg"></i> Add
+                </button>
+            </div>
+
+            <!-- Checklist Items List -->
+            <div id="wizardChecklistContainer" class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 3 PANEL (Hidden by default) -->
+    <div id="panelStep3" class="p-8 space-y-6 hidden transition-all duration-300">
+        <div class="border-b border-slate-100 pb-3">
+            <h2 class="text-base font-extrabold text-gray-800 flex items-center gap-2">
+                <i class="bi bi-journal-text text-[#0050A0]"></i> Step 3: Teks Doa (Prayer Text) Setup
+            </h2>
+            <p class="text-[11px] text-gray-400 font-semibold mt-1">Input the official prayer text for the ceremony. You can quickly reuse templates from past ceremonies on the right.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Textarea Editor -->
+            <div class="lg:col-span-8 space-y-2">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Prayer Content</label>
+                <textarea id="wizardPrayerInput" class="w-full h-64 px-4 py-3 text-xs border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] resize-none font-medium text-gray-700 leading-relaxed shadow-inner" placeholder="Type or paste prayer content here..."></textarea>
+            </div>
+
+            <!-- Previous Prayer Templates -->
+            <div class="lg:col-span-4 bg-slate-50 p-4 rounded-2xl border border-slate-200/50 space-y-3">
+                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Copy Template</span>
+                
+                <div class="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+                    <div class="p-3 bg-white border border-slate-150 rounded-xl flex justify-between items-center gap-2">
+                        <div class="min-w-0">
+                            <p class="text-xs font-bold text-gray-850 truncate">Annual Prayer 2025</p>
+                            <p class="text-[8px] text-gray-400 font-bold">August 2025</p>
+                        </div>
+                        <button onclick="applyWizardTemplate(1)" class="bg-[#0050A0] hover:bg-[#003d7a] text-white text-[9px] font-bold px-2 py-1 rounded-md transition duration-150">Copy</button>
+                    </div>
+
+                    <div class="p-3 bg-white border border-slate-150 rounded-xl flex justify-between items-center gap-2">
+                        <div class="min-w-0">
+                            <p class="text-xs font-bold text-gray-850 truncate">Regular Monthly</p>
+                            <p class="text-[8px] text-gray-400 font-bold">July 2025</p>
+                        </div>
+                        <button onclick="applyWizardTemplate(2)" class="bg-[#0050A0] hover:bg-[#003d7a] text-white text-[9px] font-bold px-2 py-1 rounded-md transition duration-150">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel Footer Navigation controls -->
+    <div class="bg-slate-50 border-t border-slate-100 p-6 flex justify-between items-center">
+        <!-- Back Button -->
+        <button id="btnBack" onclick="wizardBack()" class="bg-white hover:bg-slate-100 text-slate-600 font-bold px-5 py-2.5 rounded-xl text-xs border border-slate-200 transition duration-150 invisible">
+            <i class="bi bi-chevron-left"></i> Back
+        </button>
+
+        <!-- Next / Finish Buttons -->
+        <div>
+            <button id="btnNext" onclick="wizardNext()" class="bg-[#0050A0] hover:bg-[#003d7a] text-white font-bold px-6 py-2.5 rounded-xl text-xs transition duration-150">
+                Next <i class="bi bi-chevron-right"></i>
+            </button>
+            <button id="btnFinish" onclick="wizardFinish()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition duration-150 hidden">
+                <i class="bi bi-check2-circle"></i> Create Ceremony
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Success Modal (Popup after creation) -->
+<div id="successModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-slate-100 text-center space-y-4 transform scale-95 transition-transform duration-200">
+        <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-500 mx-auto flex items-center justify-center border border-emerald-100 shadow-sm">
+            <i class="bi bi-check-lg text-2xl font-black"></i>
+        </div>
+        <div class="space-y-1">
+            <h3 class="text-base font-extrabold text-gray-800">Ceremony Created!</h3>
+            <p class="text-xs text-gray-400 leading-relaxed font-semibold">The new ceremony schedule has been successfully created. Notification emails have been sent to the PF department.</p>
+        </div>
+        <button onclick="redirectToDashboard()" class="w-full bg-[#0050A0] hover:bg-[#003d7a] text-white font-bold py-2.5 rounded-xl text-xs transition duration-150">
+            Go to Dashboard
+        </button>
+    </div>
+</div>
+
+<!-- Alert Banner Notification (Hidden by default) -->
+<div id="toastNotification" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+    <i class="bi bi-check-circle-fill text-emerald-500 text-sm"></i>
+    <span id="toastMessage">Template applied successfully!</span>
+</div>
+
+@section Scripts {
+    <script>
+        // Constants - Default Panasonic Ceremony Rundown
+        const defaultConstantRundown = [
+            { id: 1, text: "Pengecekan sound system & mikrofon di lapangan", category: "Persiapan" },
+            { id: 2, text: "Kesiapan barisan peserta upacara tiap departemen", category: "Persiapan" },
+            { id: 3, text: "Pembina upacara memasuki lapangan & mimbar upacara", category: "Acara Inti" },
+            { id: 4, text: "Menyanyikan lagu kebangsaan Indonesia Raya", category: "Acara Inti" },
+            { id: 5, text: "Pembacaan doa oleh petugas penutup upacara", category: "Penutup" }
+        ];
+
+        // Mock Past Prayers
+        const mockTemplates = {
+            "1": "Yaa Allah, Yaa Tuhan Yang Maha Pengasih,\n\nDengan memanjatkan puji dan syukur kehadirat-Mu, pada upacara hari ini kami segenap karyawan Panasonic memohon limpahan kesehatan, keselamatan kerja, serta petunjuk dalam menjalankan tugas kami sehari-hari.\n\nSemoga kami senantiasa mampu memberikan dedikasi terbaik bagi kemajuan perusahaan.\n\nAmin.",
+            "2": "Yaa Tuhan Kami,\n\nBimbinglah langkah kami di bulan Juli ini agar penuh kejujuran, integritas, dan semangat kerja sama yang tinggi. Berikanlah kemudahan bagi proses manufaktur kami dan jauhkanlah kami dari mara bahaya.\n\nAmin."
+        };
+
+        // Wizard state variables
+        let currentStep = 1;
+        let checklistItems = JSON.parse(JSON.stringify(defaultConstantRundown)); // Load constant data initially
+
+        // DOM elements
+        const panelStep1 = document.getElementById("panelStep1");
+        const panelStep2 = document.getElementById("panelStep2");
+        const panelStep3 = document.getElementById("panelStep3");
+
+        const btnBack = document.getElementById("btnBack");
+        const btnNext = document.getElementById("btnNext");
+        const btnFinish = document.getElementById("btnFinish");
+
+        const indicatorStep2 = document.getElementById("indicatorStep2");
+        const indicatorStep3 = document.getElementById("indicatorStep3");
+        const badgeStep1 = document.getElementById("badgeStep1");
+        const badgeStep2 = document.getElementById("badgeStep2");
+        const badgeStep3 = document.getElementById("badgeStep3");
+        const lineStep1 = document.getElementById("lineStep1");
+        const lineStep2 = document.getElementById("lineStep2");
+
+        const inputDate = document.getElementById("inputDate");
+        const wizardChecklistContainer = document.getElementById("wizardChecklistContainer");
+        const wizardItemCount = document.getElementById("wizardItemCount");
+        const wizardPrayerInput = document.getElementById("wizardPrayerInput");
+
+        const successModal = document.getElementById("successModal");
+        const toast = document.getElementById("toastNotification");
+        const toastMessage = document.getElementById("toastMessage");
+
+        // Set default date to today
+        function initDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+            inputDate.value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        // Render Step indicator colors
+        function renderProgress() {
+            // Reset states
+            badgeStep1.className = "w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shadow-md transition-all duration-300";
+            badgeStep2.className = "w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm transition-all duration-300";
+            badgeStep3.className = "w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm transition-all duration-300";
+
+            indicatorStep2.classList.add("opacity-50");
+            indicatorStep3.classList.add("opacity-50");
+            if (lineStep1) lineStep1.className = "hidden md:block flex-grow h-0.5 bg-slate-100 mx-4";
+            if (lineStep2) lineStep2.className = "hidden md:block flex-grow h-0.5 bg-slate-100 mx-4";
+
+            if (currentStep === 1) {
+                badgeStep1.classList.add("bg-[#0050A0]", "text-white", "ring-4", "ring-blue-50");
+                badgeStep2.classList.add("bg-slate-200", "text-slate-500");
+                badgeStep3.classList.add("bg-slate-200", "text-slate-500");
+            } 
+            else if (currentStep === 2) {
+                badgeStep1.classList.add("bg-emerald-500", "text-white");
+                badgeStep1.innerHTML = '<i class="bi bi-check-lg text-sm"></i>';
+                badgeStep2.classList.add("bg-[#0050A0]", "text-white", "ring-4", "ring-blue-50");
+                badgeStep3.classList.add("bg-slate-200", "text-slate-500");
+                indicatorStep2.classList.remove("opacity-50");
+                if (lineStep1) lineStep1.className = "hidden md:block flex-grow h-0.5 bg-emerald-500 mx-4";
+            } 
+            else if (currentStep === 3) {
+                badgeStep1.classList.add("bg-emerald-500", "text-white");
+                badgeStep1.innerHTML = '<i class="bi bi-check-lg text-sm"></i>';
+                badgeStep2.classList.add("bg-emerald-500", "text-white");
+                badgeStep2.innerHTML = '<i class="bi bi-check-lg text-sm"></i>';
+                badgeStep3.classList.add("bg-[#0050A0]", "text-white", "ring-4", "ring-blue-50");
+                indicatorStep2.classList.remove("opacity-50");
+                indicatorStep3.classList.remove("opacity-50");
+                if (lineStep1) lineStep1.className = "hidden md:block flex-grow h-0.5 bg-emerald-500 mx-4";
+                if (lineStep2) lineStep2.className = "hidden md:block flex-grow h-0.5 bg-emerald-500 mx-4";
+            }
+        }
+
+        // Render Step Panels
+        function showActivePanel() {
+            // Hide all panels
+            panelStep1.classList.add("hidden");
+            panelStep2.classList.add("hidden");
+            panelStep3.classList.add("hidden");
+
+            // Show active panel
+            if (currentStep === 1) {
+                panelStep1.classList.remove("hidden");
+                btnBack.classList.add("invisible");
+                btnNext.classList.remove("hidden");
+                btnFinish.classList.add("hidden");
+            } 
+            else if (currentStep === 2) {
+                panelStep2.classList.remove("hidden");
+                btnBack.classList.remove("invisible");
+                btnNext.classList.remove("hidden");
+                btnFinish.classList.add("hidden");
+                renderStep2Checklist();
+            } 
+            else if (currentStep === 3) {
+                panelStep3.classList.remove("hidden");
+                btnBack.classList.remove("invisible");
+                btnNext.classList.add("hidden");
+                btnFinish.classList.remove("hidden");
+            }
+        }
+
+        // Navigation Actions
+        function wizardNext() {
+            if (currentStep < 3) {
+                currentStep++;
+                renderProgress();
+                showActivePanel();
+            }
+        }
+
+        // Go Back Action
+        function wizardBack() {
+            if (currentStep > 1) {
+                currentStep--;
+                renderProgress();
+                showActivePanel();
+            }
+        }
+
+        // Finish Creation Actions
+        function wizardFinish() {
+            // Show Success modal overlay
+            successModal.classList.remove("hidden");
+            setTimeout(() => {
+                successModal.classList.remove("opacity-0");
+                successModal.querySelector(".transform").classList.remove("scale-95");
+                successModal.querySelector(".transform").classList.add("scale-100");
+            }, 10);
+        }
+
+        function redirectToDashboard() {
+            window.location.href = "/Home/Index";
+        }
+
+        // Step 2 checklist renderer
+        function getCategoryClass(category) {
+            switch(category) {
+                case "Persiapan": return "bg-blue-50 text-blue-700 border-blue-100";
+                case "Acara Inti": return "bg-emerald-50 text-emerald-700 border-emerald-100";
+                case "Penutup": return "bg-indigo-50 text-indigo-700 border-indigo-100";
+                default: return "bg-slate-50 text-slate-700 border-slate-100";
+            }
+        }
+
+        function renderStep2Checklist() {
+            wizardItemCount.innerText = `${checklistItems.length} Items`;
+            wizardChecklistContainer.innerHTML = "";
+
+            checklistItems.forEach((item) => {
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100/70 border border-slate-150 p-2.5 rounded-xl transition duration-150";
+                itemDiv.innerHTML = `
+                    <i class="bi bi-grip-vertical text-slate-400 cursor-grab"></i>
+                    <span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${getCategoryClass(item.category)}">${item.category}</span>
+                    <input type="text" value="${item.text}" oninput="updateWizardItem(${item.id}, this.value)" class="flex-grow bg-transparent border-none text-xs font-semibold text-gray-700 focus:outline-none" />
+                    <button onclick="deleteWizardItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1.5"><i class="bi bi-trash-fill"></i></button>
+                `;
+                wizardChecklistContainer.appendChild(itemDiv);
+            });
+        }
+
+        function updateWizardItem(id, text) {
+            const item = checklistItems.find(i => i.id === id);
+            if (item) {
+                item.text = text;
+            }
+        }
+
+        function deleteWizardItem(id) {
+            checklistItems = checklistItems.filter(i => i.id !== id);
+            renderStep2Checklist();
+        }
+
+        function addWizardChecklistItem() {
+            const textInput = document.getElementById("wizardNewItemInput");
+            const catSelect = document.getElementById("wizardNewItemCategory");
+
+            if (textInput.value.trim() === "") return;
+
+            checklistItems.push({
+                id: Date.now(),
+                text: textInput.value,
+                category: catSelect.value
+            });
+
+            textInput.value = "";
+            renderStep2Checklist();
+        }
+
+        // Step 3 Template Loader
+        function applyWizardTemplate(id) {
+            const templateText = mockTemplates[id];
+            if (templateText) {
+                wizardPrayerInput.value = templateText;
+                showToast("Prayer template applied successfully!");
+            }
+        }
+
+        // Notification Helper
+        function showToast(message) {
+            toastMessage.innerText = message;
+            toast.classList.remove("translate-y-20", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-20", "opacity-0");
+            }, 3000);
+        }
+
+        // Initialize Wizard
+        initDate();
+        renderProgress();
+        showActivePanel();
+    </script>
+}
