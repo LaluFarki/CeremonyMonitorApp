@@ -84,33 +84,20 @@
     </div>
 </div>
 
-<!--Allert  Banner Notification (Hidden by Default)-->
-<div id="toastNotification" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-bold
-px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all 
-duration-300 pointer-events-none z-50">
-    <i></i>
-    <span id="toatMessage">Practice Schedule saved successfully</span>
+<!-- Alert Banner Notification (Hidden by default) -->
+<div id="toastNotification" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+    <i class="bi bi-check-circle-fill text-emerald-500 text-sm"></i>
+    <span id="toastMessage">Practice schedule saved successfully!</span>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script>
-        // database tiruan latihan 
-        {
-            id: 1, ceremony: "agus ac-depart", date: "2026-08-24",
-                time: "08:00 - 09:30", location : "PMI field"
-        }
-        {
-            id: 2, ceremony: "sep ac-depart", date: "2026-08-24",
-                time: "08:00 - 09:30", location : "PMI field"
-        }
-        {
-            id: 3, ceremony: "oct ac-depart", date: "2026-08-24",
-                time: "08:00 - 09:30", location : "PMI field"
-        }
-        {
-            id: 4, ceremony: "nov ac-depart", date: "2026-08-24",
-                time: "08:00 - 09:30", location : "PMI field"
-        }
+        // 1. Database Tiruan Latihan (Mock Practice Sessions)
+        let practiceSessions = [
+            { id: 1, ceremony: "August 2026 - AC Department", date: "2026-08-24", time: "08:00 - 09:30", location: "PMI Field" },
+            { id: 2, ceremony: "August 2026 - AC Department", date: "2026-08-25", time: "08:00 - 09:30", location: "PMI Field" },
+            { id: 3, ceremony: "September 2026 - Production 1", date: "2026-09-14", time: "08:00 - 09:30", location: "PMI Field" }
+        ];
 
         // DOM elements
         const inputCeremony = document.getElementById("inputCeremony");
@@ -122,6 +109,126 @@ duration-300 pointer-events-none z-50">
         const toast = document.getElementById("toastNotification");
         const toastMessage = document.getElementById("toastMessage");
 
+        // 2. Set Tanggal Default ke Hari Ini
+        function initDefaultDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+            inputDate.value = `${yyyy}-${mm}-${dd}`;
+        }
 
+        // Helper untuk memecah string tanggal "YYYY-MM-DD" menjadi Bulan & Tanggal untuk Kalender
+        function getCalendarDate(dateString) {
+            const dateObj = new Date(dateString);
+            const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            return {
+                day: dateObj.getDate() || "01",
+                month: months[dateObj.getMonth()] || "JAN"
+            };
+        }
+
+        // 3. Render Kartu Jadwal Latihan
+        function renderSessions() {
+            container.innerHTML = "";
+            sessionCount.innerText = `${practiceSessions.length} Session${practiceSessions.length !== 1 ? 's' : ''}`;
+
+            if (practiceSessions.length === 0) {
+                container.innerHTML = `
+                                <div class="py-12 text-center text-gray-400">
+                                    <i class="bi bi-calendar-x text-3xl block mb-2"></i>
+                                    <p class="text-xs font-semibold">No practice sessions scheduled yet.</p>
+                                </div>
+                            `;
+                return;
+            }
+
+            practiceSessions.forEach((session) => {
+                const cal = getCalendarDate(session.date);
+                const sessionDiv = document.createElement("div");
+                sessionDiv.className = "flex items-center justify-between gap-4 p-4 rounded-2xl border border-slate-100 hover:border-slate-200 bg-slate-50/30 hover:bg-slate-50/70 transition duration-150";
+
+                sessionDiv.innerHTML = `
+                                <div class="flex items-center gap-4 min-w-0">
+                                    <!-- Kotak Kalender Premium -->
+                                    <div class="w-12 h-14 rounded-xl bg-[#EBF3FF] border border-blue-100/50 flex flex-col items-center justify-center shrink-0">
+                                        <span class="text-[9px] font-black text-[#0050A0] tracking-wider leading-none">${cal.month}</span>
+                                        <span class="text-lg font-black text-[#0050A0] leading-none mt-1.5">${cal.day}</span>
+                                    </div>
+                                    
+                                    <!-- Detail Sesi Latihan -->
+                                    <div class="min-w-0">
+                                        <h4 class="text-xs font-black text-gray-800 truncate">${session.ceremony}</h4>
+                                        <div class="flex flex-wrap gap-x-3 gap-y-1 text-[10px] text-gray-400 font-bold mt-1">
+                                            <span class="flex items-center gap-1"><i class="bi bi-clock"></i> ${session.time}</span>
+                                            <span class="flex items-center gap-1"><i class="bi bi-geo-alt"></i> ${session.location}</span>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <!-- Tombol Hapus Latihan -->
+                                <button onclick="deletePracticeSession(${session.id})" class="text-rose-500 hover:text-rose-700 hover:bg-rose-50 w-8 h-8 rounded-xl flex items-center justify-center transition shrink-0" title="Delete Schedule">
+                                    <i class="bi bi-trash-fill text-sm"></i>
+                                </button>
+                            `;
+                container.appendChild(sessionDiv);
+            });
+        }
+
+        // 4. Aksi Tambah Jadwal Latihan Baru
+        function addPracticeSession() {
+            const dateValue = inputDate.value;
+            const timeValue = inputTime.value.trim();
+            const locationValue = inputLocation.value.trim();
+            const ceremonyValue = inputCeremony.value;
+
+            if (!dateValue) {
+                alert("Please select a practice date.");
+                return;
+            }
+
+            if (!timeValue) {
+                alert("Please input a practice time range.");
+                return;
+            }
+
+            // Simpan ke array
+            const newSession = {
+                id: Date.now(),
+                ceremony: ceremonyValue,
+                date: dateValue,
+                time: timeValue,
+                location: locationValue || "PMI Field"
+            };
+
+            practiceSessions.push(newSession);
+            renderSessions();
+            showToast("Practice session added successfully!");
+        }
+
+        // 5. Aksi Hapus Jadwal Latihan
+        function deletePracticeSession(id) {
+            practiceSessions = practiceSessions.filter(s => s.id !== id);
+            renderSessions();
+            showToast("Practice session cancelled.");
+        }
+
+        // Helper Pop-up Notification Toast
+        function showToast(message) {
+            toastMessage.innerText = message;
+            toast.classList.remove("translate-y-20", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-20", "opacity-0");
+            }, 3000);
+        }
+
+        // Jalankan saat load awal
+        initDefaultDate();
+        renderSessions();
     </script>
 }
