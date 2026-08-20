@@ -4044,11 +4044,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\CeremonyMonitorApp.csproj",
+      "projectUniqueName": "d:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\CeremonyMonitorApp.csproj",
       "projectName": "CeremonyMonitorApp",
-      "projectPath": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\CeremonyMonitorApp.csproj",
+      "projectPath": "d:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\CeremonyMonitorApp.csproj",
       "packagesPath": "C:\\Users\\farki\\.nuget\\packages\\",
-      "outputPath": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\obj\\",
+      "outputPath": "d:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4067,6 +4067,7 @@
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {}
         }
@@ -4085,6 +4086,7 @@
     },
     "frameworks": {
       "net8.0": {
+        "framework": "net8.0",
         "targetAlias": "net8.0",
         "dependencies": {
           "BCrypt.Net-Next": {
