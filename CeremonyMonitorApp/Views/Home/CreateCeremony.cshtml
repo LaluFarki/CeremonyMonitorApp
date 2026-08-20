@@ -170,11 +170,11 @@
         </button>
 
         <!-- Next / Finish Buttons -->
-        <div>
+        <div class="flex items-center gap-2">
             <button id="btnNext" onclick="wizardNext()" class="bg-[#0050A0] hover:bg-[#003d7a] text-white font-bold px-6 py-2.5 rounded-xl text-xs transition duration-150">
                 Next <i class="bi bi-chevron-right"></i>
             </button>
-            <button id="btnFinish" onclick="wizardFinish()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition duration-150 hidden">
+            <button id="btnFinish" onclick="wizardFinish()" class="hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition duration-150" style="background-color: #10b981;">
                 <i class="bi bi-check2-circle"></i> Create Ceremony
             </button>
         </div>
@@ -307,25 +307,25 @@
             panelStep2.classList.add("hidden");
             panelStep3.classList.add("hidden");
 
-            // Show active panel
+            // Show active panel and manage button visibility
+            // HRD can click "Create Ceremony" at any step to save immediately
+            btnFinish.classList.remove("hidden"); 
+
             if (currentStep === 1) {
                 panelStep1.classList.remove("hidden");
                 btnBack.classList.add("invisible");
                 btnNext.classList.remove("hidden");
-                btnFinish.classList.add("hidden");
             } 
             else if (currentStep === 2) {
                 panelStep2.classList.remove("hidden");
                 btnBack.classList.remove("invisible");
                 btnNext.classList.remove("hidden");
-                btnFinish.classList.add("hidden");
                 renderStep2Checklist();
             } 
             else if (currentStep === 3) {
                 panelStep3.classList.remove("hidden");
                 btnBack.classList.remove("invisible");
                 btnNext.classList.add("hidden");
-                btnFinish.classList.remove("hidden");
             }
         }
 
