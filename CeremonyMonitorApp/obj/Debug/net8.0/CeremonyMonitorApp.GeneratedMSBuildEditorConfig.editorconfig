@@ -9,265 +9,265 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CeremonyMonitorApp
 build_property.RootNamespace = CeremonyMonitorApp
-build_property.ProjectDir = D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\
+build_property.ProjectDir = d:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp
+build_property.MSBuildProjectDirectory = d:\Panasonic Ceremony Monitor - UI Design\CeremonyMonitorApp\CeremonyMonitorApp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Account/AccessDenied.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Account/Login.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwVXNlcnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwVXNlcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwVXNlcnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AppUsers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AwardeeApproval/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/AwardeeApproval/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXdhcmRlZUFwcHJvdmFsXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Awardees/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Awardees/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXdhcmRlZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Awardees/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Awardees/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXdhcmRlZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2VyZW1vbmllc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2VyZW1vbmllc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2VyZW1vbmllc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2VyZW1vbmllc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Ceremonies/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2VyZW1vbmllc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Departments/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Employees/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/CreateCeremony.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/CreateCeremony.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDcmVhdGVDZXJlbW9ueS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/History.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/History.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/MCChecklist.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/MCChecklist.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNQ0NoZWNrbGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Practice.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Practice.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcmFjdGljZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/PrayersSpeech.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/PrayersSpeech.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcmF5ZXJzU3BlZWNoLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Privacy.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Schedule.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Home/Schedule.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTY2hlZHVsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTUNDaGVja2xpc3RJdGVtc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTUNDaGVja2xpc3RJdGVtc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTUNDaGVja2xpc3RJdGVtc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTUNDaGVja2xpc3RJdGVtc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/MCChecklistItems/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTUNDaGVja2xpc3RJdGVtc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJheWVyVGV4dHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJheWVyVGV4dHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJheWVyVGV4dHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJheWVyVGV4dHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/PrayerTexts/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJheWVyVGV4dHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFzc2lnbm1lbnRzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFzc2lnbm1lbnRzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFzc2lnbm1lbnRzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFzc2lnbm1lbnRzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/RoleAssignments/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFzc2lnbm1lbnRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Shared/Error.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlZWNoZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlZWNoZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlZWNoZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlZWNoZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Speeches/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3BlZWNoZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Create.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTZXNzaW9uc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Delete.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTZXNzaW9uc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Details.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTZXNzaW9uc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Edit.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTZXNzaW9uc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Index.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/TrainingSessions/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhaW5pbmdTZXNzaW9uc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/_ViewImports.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/_ViewStart.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Shared/_Layout.cshtml]
+[d:/Panasonic Ceremony Monitor - UI Design/CeremonyMonitorApp/CeremonyMonitorApp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-pxk1nou4ex

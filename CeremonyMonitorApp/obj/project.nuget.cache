@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Y5qLl3Ulc0Y=",
+  "dgSpecHash": "I4Vnc4fWuUk=",
   "success": true,
-  "projectFilePath": "D:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\CeremonyMonitorApp.csproj",
+  "projectFilePath": "d:\\Panasonic Ceremony Monitor - UI Design\\CeremonyMonitorApp\\CeremonyMonitorApp\\CeremonyMonitorApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\farki\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\farki\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

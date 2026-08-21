@@ -1,81 +1,163 @@
-﻿@model List<Awardee>
+@model List<Awardee>
 @{
     ViewData["Title"] = "Awardee Approval";
     var role = ViewBag.Role as string;
-    var stageLabel = role == "HrAdmin" ? "Tahap Anda: hr_admin_review" : "Tahap Anda: hr_manager_final";
+    var stageLabel = role == "HrAdmin" ? "Stage: HR Admin Review (Nominator Queue)" : "Stage: HR Manager Final Review";
 }
 
-<div class="p-8">
-    <h1 class="text-2xl font-bold text-navy">Awardee Approval</h1>
-    <p class="text-sm text-gray-500 mt-1">@stageLabel — lolos di sini @(role == "HrAdmin" ? "akan lanjut ke HR Manager" : "akan berstatus Approved").</p>
+<!-- Header Halaman -->
+<div class="mb-8">
+    <div class="flex items-center gap-2 text-xs font-semibold text-gray-400 mb-1">
+        <a href="/Home/Index" class="hover:text-[#0050A0]">Dashboard</a>
+        <span>/</span>
+        <span class="text-gray-600 font-bold">Awardee Approval</span>
+    </div>
+    <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">Awardee Approval Queue</h1>
+    <p class="text-sm text-gray-500 mt-1">Review outstanding employee nominations submitted by Business Unit departments.</p>
+</div>
 
-    @if (TempData["RejectError"] != null)
-    {
-        <div class="bg-red-50 text-red-600 text-sm px-4 py-3 rounded mt-4">
-            @TempData["RejectError"]
+<!-- Queue Info Banner -->
+<div class="bg-[#EBF3FF] border border-blue-100 p-4.5 rounded-3xl mb-8 flex justify-between items-center gap-4 text-xs font-semibold text-gray-700">
+    <div class="flex items-center gap-2.5">
+        <i class="bi bi-shield-check text-[#0050A0] text-lg"></i>
+        <div>
+            <p class="font-extrabold text-[#17233F]">Active Approval Review</p>
+            <p class="text-[10px] text-gray-400 font-bold mt-0.5">@stageLabel</p>
         </div>
-    }
+    </div>
+    <span class="bg-[#0050A0] text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+        @(role == "HrAdmin" ? "Review Level 1" : "Final Level")
+    </span>
+</div>
 
-    <div class="mt-6 bg-white border rounded-lg overflow-hidden">
-        <table class="w-full text-sm">
-            <thead class="bg-gray-50 text-left text-gray-500">
-                <tr>
-                    <th class="px-4 py-3">Karyawan</th>
-                    <th class="px-4 py-3">Departemen</th>
-                    <th class="px-4 py-3">Diajukan</th>
-                    <th class="px-4 py-3">Ceremony</th>
-                    <th class="px-4 py-3">Aksi</th>
+<!-- Rejection Error Notice -->
+@if (TempData["RejectError"] != null)
+{
+    <div class="bg-rose-50 border border-rose-100 p-4 rounded-2xl flex gap-3 text-xs text-rose-800 leading-relaxed font-semibold mb-6 animate-pulse">
+        <i class="bi bi-x-circle-fill text-rose-500 text-base shrink-0"></i>
+        <p>@TempData["RejectError"]</p>
+    </div>
+}
+
+<!-- Table Queue Card -->
+<div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-8">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50/40 border-b border-slate-100 text-[10px] font-black text-[#17233F] uppercase tracking-wider">
+                    <th class="py-5 px-8">Employee & Nominated Title</th>
+                    <th class="py-5 px-8">Nominator Dept</th>
+                    <th class="py-5 px-8">Submitted Date</th>
+                    <th class="py-5 px-8">Ceremony</th>
+                    <th class="py-5 px-8 text-center">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-slate-50 text-xs font-semibold text-gray-700">
                 @foreach (var a in Model)
                 {
-                    <tr class="border-t">
-                        <td class="px-4 py-3">
-                            <div class="font-semibold">@a.Employee?.FullName</div>
-                            <div class="text-gray-500 text-xs">@a.Title</div>
+                    <tr class="hover:bg-slate-50/50 transition duration-150">
+                        <!-- Employee Info -->
+                        <td class="py-5 px-8">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-blue-50 text-[#0050A0] flex items-center justify-center font-black">
+                                    @(a.Employee?.FullName != null ? string.Join("", a.Employee.FullName.Split(' ').Select(n => n[0])).ToUpper().Substring(0, Math.Min(2, a.Employee.FullName.Split(' ').Length)) : "AW")
+                                </div>
+                                <div>
+                                    <p class="font-extrabold text-gray-800 tracking-tight">@a.Employee?.FullName</p>
+                                    <p class="text-[10px] text-gray-400 font-bold mt-0.5">@a.Title</p>
+                                </div>
+                            </div>
                         </td>
-                        <td class="px-4 py-3">@a.NominatingDepartment?.Name</td>
-                        <td class="px-4 py-3 text-gray-500">@a.SubmittedAt.ToString("dd MMM yyyy")</td>
-                        <td class="px-4 py-3 text-gray-500">@a.Ceremony?.ScheduledDate.ToString("dd MMM yyyy")</td>
-                        <td class="px-4 py-3">
-                            <button type="button" onclick="openModal(@a.Id, '@a.Employee?.FullName')"
-                                    class="bg-navy text-white text-xs font-semibold px-3 py-1.5 rounded">
-                                Review
+                        
+                        <!-- Department -->
+                        <td class="py-5 px-8 align-middle text-gray-600 font-bold">
+                            @a.NominatingDepartment?.Name
+                        </td>
+                        
+                        <!-- Submitted Date -->
+                        <td class="py-5 px-8 align-middle text-gray-400">
+                            @a.SubmittedAt.ToString("dd MMM yyyy")
+                        </td>
+                        
+                        <!-- Ceremony -->
+                        <td class="py-5 px-8 align-middle text-gray-500 font-bold">
+                            @a.Ceremony?.ScheduledDate.ToString("dd MMM yyyy")
+                        </td>
+                        
+                        <!-- Review Action -->
+                        <td class="py-5 px-8 align-middle text-center">
+                            <button type="button" onclick="openReviewModal(@a.Id, '@a.Employee?.FullName', '@a.Title', '@a.NominatingDepartment?.Name', '@Html.Raw(a.Reason.Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", ""))')"
+                                    class="bg-[#0050A0] hover:bg-[#003d7a] text-white font-bold py-1.5 px-4 rounded-xl text-[10px] flex items-center justify-center gap-1.5 shadow-sm transition duration-150 mx-auto">
+                                <i class="bi bi-clipboard-check"></i> Review
                             </button>
                         </td>
                     </tr>
                 }
+                
                 @if (!Model.Any())
                 {
-                    <tr><td colspan="5" class="px-4 py-6 text-center text-gray-400">Tidak ada nominasi menunggu review.</td></tr>
+                    <tr>
+                        <td colspan="5" class="py-12 text-center text-gray-400">
+                            <i class="bi bi-check2-circle text-3xl block mb-2 text-emerald-500"></i>
+                            <p class="text-xs font-semibold">All caught up! No nominations waiting for review.</p>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- Modal -->
-<div id="reviewModal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center">
-    <div class="bg-white rounded-lg p-6 w-full max-w-md">
-        <h2 class="text-lg font-bold text-navy">Review Nominasi</h2>
-        <p class="text-sm text-gray-500 mt-1" id="modalEmployeeName"></p>
+<!-- Custom Review Modal Popup -->
+<div id="reviewModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white w-full max-w-lg rounded-3xl p-6 shadow-2xl border border-slate-100 space-y-5 transform scale-95 transition-transform duration-200">
+        
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+            <div>
+                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Review Nomination</span>
+                <h3 class="text-base font-extrabold text-gray-800 mt-0.5"><span id="modalEmployeeName" class="text-[#0050A0]">Employee Name</span></h3>
+            </div>
+            <button onclick="closeReviewModal()" class="text-gray-400 hover:text-gray-600"><i class="bi bi-x-lg"></i></button>
+        </div>
+        
+        <!-- Nomination Details Card -->
+        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-150 space-y-3.5 text-xs text-gray-600 font-semibold leading-relaxed">
+            <div class="grid grid-cols-2 gap-4 border-b border-slate-200/50 pb-3">
+                <div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Award Title</span>
+                    <span id="modalAwardTitle" class="text-gray-850 font-bold">Title</span>
+                </div>
+                <div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Submitted By</span>
+                    <span id="modalDepartment" class="text-gray-850 font-bold">Department</span>
+                </div>
+            </div>
+            <div>
+                <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block mb-1">Achievement Reason</span>
+                <p id="modalReason" class="text-gray-700 italic bg-white p-3.5 rounded-xl border border-slate-200 font-medium"></p>
+            </div>
+        </div>
 
-        <form id="modalForm" method="post" class="mt-4">
+        <!-- Decision Form -->
+        <form id="modalForm" method="post" class="space-y-4">
             @Html.AntiForgeryToken()
-            <label class="block text-sm font-semibold mb-1">Catatan</label>
-            <textarea name="notes" rows="3" class="w-full border rounded px-3 py-2 text-sm"
-                      placeholder="Wajib diisi kalau menolak, opsional kalau menyetujui..."></textarea>
+            <div class="space-y-1.5">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Review Comments / Notes</label>
+                <textarea name="notes" rows="3" class="w-full px-4 py-3 text-xs border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] resize-none font-semibold text-gray-700 leading-relaxed shadow-inner"
+                          placeholder="Required when rejecting, optional when approving..."></textarea>
+            </div>
 
-            <div class="flex justify-end gap-2 mt-4">
-                <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-500">Batal</button>
-                <button type="submit" formaction="/AwardeeApproval/Reject" id="modalRejectId"
-                        class="px-4 py-2 text-sm border border-red-500 text-red-500 rounded font-semibold">
-                    Tolak
+            <!-- Footer Actions -->
+            <div class="flex justify-end gap-2 pt-3 border-t border-slate-50">
+                <button type="button" onclick="closeReviewModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-4 py-2.5 rounded-xl text-xs transition duration-150 border border-slate-200/50">Cancel</button>
+                <button type="submit" id="modalRejectBtn"
+                        class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition duration-150">
+                    <i class="bi bi-x-circle"></i> Reject
                 </button>
-                <button type="submit" formaction="/AwardeeApproval/Approve" id="modalApproveId"
-                        class="px-4 py-2 text-sm bg-navy text-white rounded font-semibold">
-                    Setujui
+                <button type="submit" id="modalApproveBtn"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition duration-150">
+                    <i class="bi bi-check2-circle"></i> Approve
                 </button>
             </div>
         </form>
@@ -83,14 +165,45 @@
 </div>
 
 <script>
-    function openModal(id, name) {
-        document.getElementById('modalEmployeeName').innerText = name;
-        document.getElementById('modalForm').action = '/AwardeeApproval/Approve/' + id;
-        document.getElementById('modalRejectId').setAttribute('formaction', '/AwardeeApproval/Reject/' + id);
-        document.getElementById('modalApproveId').setAttribute('formaction', '/AwardeeApproval/Approve/' + id);
-        document.getElementById('reviewModal').classList.remove('hidden');
+    const reviewModal = document.getElementById("reviewModal");
+    const modalEmployeeName = document.getElementById("modalEmployeeName");
+    const modalAwardTitle = document.getElementById("modalAwardTitle");
+    const modalDepartment = document.getElementById("modalDepartment");
+    const modalReason = document.getElementById("modalReason");
+    const modalForm = document.getElementById("modalForm");
+    const modalApproveBtn = document.getElementById("modalApproveBtn");
+    const modalRejectBtn = document.getElementById("modalRejectBtn");
+
+    function openReviewModal(id, name, title, department, reason) {
+        modalEmployeeName.innerText = name;
+        modalAwardTitle.innerText = title;
+        modalDepartment.innerText = department;
+        modalReason.innerText = reason;
+        
+        // Bind forms action dynamically to match controller routes
+        modalForm.action = '/AwardeeApproval/Approve/' + id;
+        modalApproveBtn.onclick = function() {
+            modalForm.action = '/AwardeeApproval/Approve/' + id;
+        };
+        modalRejectBtn.onclick = function() {
+            modalForm.action = '/AwardeeApproval/Reject/' + id;
+        };
+
+        // Show Modal
+        reviewModal.classList.remove("hidden");
+        setTimeout(() => {
+            reviewModal.classList.remove("opacity-0");
+            reviewModal.querySelector(".transform").classList.remove("scale-95");
+            reviewModal.querySelector(".transform").classList.add("scale-100");
+        }, 10);
     }
-    function closeModal() {
-        document.getElementById('reviewModal').classList.add('hidden');
+
+    function closeReviewModal() {
+        reviewModal.classList.add("opacity-0");
+        reviewModal.querySelector(".transform").classList.remove("scale-100");
+        reviewModal.querySelector(".transform").classList.add("scale-95");
+        setTimeout(() => {
+            reviewModal.classList.add("hidden");
+        }, 200);
     }
 </script>
