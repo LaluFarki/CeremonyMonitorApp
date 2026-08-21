@@ -43,7 +43,7 @@ public class AccountController : Controller
         if (user.DepartmentId.HasValue)
             HttpContext.Session.SetInt32("UserDepartmentId", user.DepartmentId.Value);
 
-        return RedirectToAction("Index", "Ceremonies");
+        return RedirectToAction("Index", "Home");
     }
     [AllowAnonymous]
     public IActionResult AccessDenied()

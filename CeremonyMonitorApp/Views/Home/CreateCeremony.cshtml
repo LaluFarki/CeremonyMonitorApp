@@ -9,7 +9,7 @@
         <span>/</span>
         <span class="text-gray-600 font-bold">New Ceremony Wizard</span>
     </div>
-    <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">Create New Ceremony</h1>
+    <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">Create New Ceremony - tes jalur </h1>
     <p class="text-sm text-gray-500 mt-1">Set up ceremony schedule, initialize MC checklist, and define prayer texts.</p>
 </div>
 
@@ -53,7 +53,7 @@
 
 <!-- Wizard Step Panel Container -->
 <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-8">
-    
+
     <!-- STEP 1 PANEL -->
     <div id="panelStep1" class="p-8 space-y-6 transition-all duration-300">
         <div class="border-b border-slate-100 pb-3">
@@ -67,17 +67,20 @@
             <!-- Ceremony Date -->
             <div class="space-y-2">
                 <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Ceremony Date</label>
-                <input type="date" id="inputDate" class="w-full px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] text-sm font-bold text-gray-700 cursor-pointer" />
+                <input type="date" id="inputDate" class="w-full px-4 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] text-sm font-bold text-gray-700 cursor-pointer"/>
             </div>
 
             <!-- Executing Department -->
             <div class="space-y-2">
                 <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block">Executing Department</label>
                 <select id="inputDept" class="w-full px-4 py-3 border border-slate-200 rounded-2xl bg-white focus:outline-none focus:border-[#0050A0] text-sm font-bold text-gray-700 cursor-pointer">
-                    <option value="AC Department">AC Department</option>
-                    <option value="Production 1">Production 1</option>
-                    <option value="Engineering">Engineering</option>
-                    <option value="Refrigeration">Refrigeration</option>
+                    @if (ViewBag.Departments != null)
+                    {
+                        foreach (var dept in ViewBag.Departments as List<Department>)
+                        {
+                            <option value="@dept.Id">@dept.Name</option>
+                        }
+                    }
                 </select>
             </div>
         </div>
@@ -103,7 +106,7 @@
         <div class="max-w-3xl space-y-5">
             <!-- Add Item Form -->
             <div class="flex gap-2">
-                <input type="text" id="wizardNewItemInput" class="flex-grow px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-[#0050A0]" placeholder="Add a custom step..." />
+                <input type="text" id="wizardNewItemInput" class="flex-grow px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-[#0050A0]" placeholder="Add a custom step..."/>
                 <select id="wizardNewItemCategory" class="px-3 py-2.5 text-xs font-bold border border-slate-200 rounded-xl bg-gray-50 focus:outline-none text-gray-650">
                     <option value="Persiapan">Persiapan</option>
                     <option value="Acara Inti">Acara Inti</option>
@@ -140,7 +143,7 @@
             <!-- Previous Prayer Templates -->
             <div class="lg:col-span-4 bg-slate-50 p-4 rounded-2xl border border-slate-200/50 space-y-3">
                 <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Copy Template</span>
-                
+
                 <div class="space-y-2 max-h-[220px] overflow-y-auto pr-1">
                     <div class="p-3 bg-white border border-slate-150 rounded-xl flex justify-between items-center gap-2">
                         <div class="min-w-0">
@@ -278,7 +281,7 @@
                 badgeStep1.classList.add("bg-[#0050A0]", "text-white", "ring-4", "ring-blue-50");
                 badgeStep2.classList.add("bg-slate-200", "text-slate-500");
                 badgeStep3.classList.add("bg-slate-200", "text-slate-500");
-            } 
+            }
             else if (currentStep === 2) {
                 badgeStep1.classList.add("bg-emerald-500", "text-white");
                 badgeStep1.innerHTML = '<i class="bi bi-check-lg text-sm"></i>';
@@ -286,7 +289,7 @@
                 badgeStep3.classList.add("bg-slate-200", "text-slate-500");
                 indicatorStep2.classList.remove("opacity-50");
                 if (lineStep1) lineStep1.className = "hidden md:block flex-grow h-0.5 bg-emerald-500 mx-4";
-            } 
+            }
             else if (currentStep === 3) {
                 badgeStep1.classList.add("bg-emerald-500", "text-white");
                 badgeStep1.innerHTML = '<i class="bi bi-check-lg text-sm"></i>';
@@ -309,19 +312,19 @@
 
             // Show active panel and manage button visibility
             // HRD can click "Create Ceremony" at any step to save immediately
-            btnFinish.classList.remove("hidden"); 
+            btnFinish.classList.remove("hidden");
 
             if (currentStep === 1) {
                 panelStep1.classList.remove("hidden");
                 btnBack.classList.add("invisible");
                 btnNext.classList.remove("hidden");
-            } 
+            }
             else if (currentStep === 2) {
                 panelStep2.classList.remove("hidden");
                 btnBack.classList.remove("invisible");
                 btnNext.classList.remove("hidden");
                 renderStep2Checklist();
-            } 
+            }
             else if (currentStep === 3) {
                 panelStep3.classList.remove("hidden");
                 btnBack.classList.remove("invisible");
@@ -348,23 +351,84 @@
         }
 
         // Finish Creation Actions
+        // Mengirimkan seluruh data Wizard (Tanggal, Departemen, Rundown MC, dan Doa) ke Backend
         function wizardFinish() {
-            // Show Success modal overlay
-            successModal.classList.remove("hidden");
-            setTimeout(() => {
-                successModal.classList.remove("opacity-0");
-                successModal.querySelector(".transform").classList.remove("scale-95");
-                successModal.querySelector(".transform").classList.add("scale-100");
-            }, 10);
+            const dateValue = document.getElementById("inputDate").value;
+            const deptIdValue = parseInt(document.getElementById("inputDept").value);
+            const prayerValue = document.getElementById("wizardPrayerInput").value;
+
+            //validasi tanggal sebelum submit
+            if (!dateValue) {
+                alert("please Select a Ceremony Date first");
+                return;
+            }
+
+            // Memetakan array checklistItems menjadi format DTO C# (Title & Category)
+            const rundownData = checklistItems.map(item => {
+                return {
+                    title: item.text,
+                    category: item.category
+                };
+            });
+
+            //menyiapkan  payload data json
+            const payload = {
+                scheduledDate: dateValue,
+                departmentId: deptIdValue,
+                rundownItems: rundownData,
+                prayerText: prayerValue
+            };
+
+            //    // Ubah status tombol finish agar tidak disubmit berkali-kali (double-submit protection)
+            const btnFinish = document.getElementById("btnFinish");
+            btnFinish.disabled = true;
+            btnFinish.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving.....';
+
+            // Kirim request POST ke endpoint controller C#
+            fetch('/Ceremonies/CreateWizard', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error" + response.status)
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        //jika sukses disimpan di database, munculkak  popup sukses
+                        successModal.classList.remove("hidden");
+                        setTimeout(() => {
+                            successModal.classList.remove("opacity-0");
+                            successModal.querySelector(".transform").classList.remove("scale-95");
+                            successModal.querySelector(".transform").classList.add("scale-100");
+                        }, 10);
+                    } else {
+                        alert("Failed to save ceremony: " + (data.message || "Uknown error"));
+                        btnFinish.disabled = false;
+                        btnFinish.innerHTML = '<i class="bi bi-check-circle-fill text-sm"></i> Create Ceremony'
+                    }
+                })
+                .catch(error => {
+                    console.error("error saving Ceremony:", error);
+                    alert("An error Occured while saving the ceremony . Please try again");
+                    btnFinish.disabled = false;
+                    btnFinish.innerHTML = '<i class="bi bi-check-circle-fill text-sm"></i> Create Ceremony';
+                });
         }
 
         function redirectToDashboard() {
-            window.location.href = "/Home/Index";
+            window.location.href = "/Ceremonies/Index"; // Arahkan ke halaman daftar upacara
         }
+
 
         // Step 2 checklist renderer
         function getCategoryClass(category) {
-            switch(category) {
+            switch (category) {
                 case "Persiapan": return "bg-blue-50 text-blue-700 border-blue-100";
                 case "Acara Inti": return "bg-emerald-50 text-emerald-700 border-emerald-100";
                 case "Penutup": return "bg-indigo-50 text-indigo-700 border-indigo-100";
@@ -380,11 +444,11 @@
                 const itemDiv = document.createElement("div");
                 itemDiv.className = "flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100/70 border border-slate-150 p-2.5 rounded-xl transition duration-150";
                 itemDiv.innerHTML = `
-                    <i class="bi bi-grip-vertical text-slate-400 cursor-grab"></i>
-                    <span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${getCategoryClass(item.category)}">${item.category}</span>
-                    <input type="text" value="${item.text}" oninput="updateWizardItem(${item.id}, this.value)" class="flex-grow bg-transparent border-none text-xs font-semibold text-gray-700 focus:outline-none" />
-                    <button onclick="deleteWizardItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1.5"><i class="bi bi-trash-fill"></i></button>
-                `;
+                                                                                    <i class="bi bi-grip-vertical text-slate-400 cursor-grab"></i>
+                                                                                    <span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${getCategoryClass(item.category)}">${item.category}</span>
+                                                                                    <input type="text" value="${item.text}" oninput="updateWizardItem(${item.id}, this.value)" class="flex-grow bg-transparent border-none text-xs font-semibold text-gray-700 focus:outline-none" />
+                                                                                    <button onclick="deleteWizardItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1.5"><i class="bi bi-trash-fill"></i></button>
+                                                                                `;
                 wizardChecklistContainer.appendChild(itemDiv);
             });
         }

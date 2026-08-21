@@ -1,7 +1,35 @@
+using System.Reflection.Metadata.Ecma335;
 using CeremonyMonitorApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+
+
+public class CreateCeremonyWizardDto
+{
+    //tanggal pelaksanaan upaa=
+    public DateTime ScheduledDate { get; set; }
+
+    //Id departemen Pelaksana
+    public int DepartmentId { get; set; }
+
+    //Daftar item rundown Mc 
+    public List<RundownItemDto> RundownItems { get; set; } = new();
+
+    //teks Doa 
+    public string? prayertext { get; set; }
+
+}
+
+public class RundownItemDto
+{
+    // Judul Kegiatan 
+    public string Title { get; set; } = string.Empty;
+
+    //Kategori kegiatan 
+    public string Category { get; set; } = string.Empty;
+}
+
 
 public class CeremoniesController : Controller
 {
@@ -130,6 +158,71 @@ public class CeremoniesController : Controller
 
         */
     }
+
+
+     // =========================================================
+    // POST: /Ceremonies/CreateWizard
+    // Menyimpan seluruh data upacara, rundown, dan doa dari Wizard
+    // =========================================================
+    [HttpPost]
+    public async Task<IActionResult> CreateWizard([FromBody] CreateCeremonyWizardDto dto)
+    {
+        //1.Valdiasi awal jika data yg dikirim kosong
+        if (dto == null)
+        {
+            return BadRequest("Data Pendaftaran Tidak Valid");
+        }
+
+        //2. Buat objek Upacara (Ceremony Baru)
+        var ceremony = new Ceremony
+        {
+            DepartmentId = dto.DepartmentId,
+            ScheduledDate = dto.ScheduledDate,
+            Status = CeremonyStatus.Scheduled
+        };
+
+        //menambahkan antrian ke database
+        _context.Ceremonies.Add(ceremony);
+
+        //Simpan perubahan pertama , SUpayaA SQL server memuat ID oromatis
+        await _context.SaveChangesAsync();
+
+        //3. Masukkan item rundown MC ke tabel Db MCChecklis
+        int index = 0;
+        foreach (var item in dto.RundownItems)
+        {
+            var mccItem = new MCChecklistItem
+            {
+                CeremonyId = ceremony.Id,
+                Title = item.Title,
+                ScripText = item.Category,
+                OrderIndex = index++,
+                IsCompleted =  false
+            };
+            _context.MCChecklistItems.Add(mccItem);
+        }
+
+        // 4. Memasukkan Teks Doa ke Tabel nya
+        if (!string.IsNullOrWhiteSpace(dto.prayertext))
+        {
+            var prayer = new PrayerText()
+            {
+                CeremonyId = ceremony.Id,
+                Title = $"Prayer for {ceremony.ScheduledDate: MMMM yyyy}",
+                Text = dto.prayertext.Trim(),
+                UpdatedAt =  DateTime.Now
+            };
+            _context.PrayerTexts.Add(prayer);
+        }
+
+        //5 SImoan  seluruh detail rundown ke Db
+        await _context.SaveChangesAsync();
+        
+    // Mengembalikan respons sukses berupa JSON ke JavaScript di frontend
+    return Json( new {success = true, ceremonyId = ceremony.Id});
+    }
+
+
 
     // GET: CEREMONYS/Delete/5
     public async Task<IActionResult> Delete(int? id)

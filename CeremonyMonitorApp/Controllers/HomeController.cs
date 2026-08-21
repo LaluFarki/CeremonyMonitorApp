@@ -1,16 +1,18 @@
 using System.Diagnostics;
 using CeremonyMonitorApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CeremonyMonitorApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly AppDbContext _context;
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context )
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -24,11 +26,6 @@ namespace CeremonyMonitorApp.Controllers
         }
 
         public IActionResult Schedule()
-        {
-            return View();
-        }
-
-        public IActionResult Awardee()
         {
             return View();
         }
@@ -53,8 +50,9 @@ namespace CeremonyMonitorApp.Controllers
             return View();
         }
 
-        public IActionResult CreateCeremony()
+        public async Task<IActionResult> CreateCeremony()
         {
+            ViewBag.Departments = await _context.Departments.ToListAsync();
             return View();
         }
 
