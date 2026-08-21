@@ -1,5 +1,35 @@
+@model List<Ceremony>
 @{
     ViewData["Title"] = "Ceremony Schedule";
+
+    // 1. Ambil tahun aktif dari ViewBag, jika null gunakan tahun saat ini secara dinamis
+    int activeYear = ViewBag.ActiveYear ?? DateTime.Now.Year;
+    // 2. Buat kontainer array berisi 12 slot upacara (mewakili 12 bulan )
+    var monthlySchedules = new Ceremony[12];
+
+    // 2. Isi kontainer berdasarkan bulan pelaksanaan dari database
+    if (Model != null)
+    {
+        foreach (var c in Model)
+        {
+            // Saring hanya upacara yang sesuai dengan taun aktif
+            if (c.ScheduledDate.Year == activeYear)
+            {
+                int monthIndex = c.ScheduledDate.Month - 1; // Konversi bulan 1-12 menjadi index array 0-11
+                if (monthIndex >= 0 && monthIndex < 12)
+                {
+                    monthlySchedules[monthIndex] = c;
+                }
+            }
+        }
+    }
+
+    // 4. Array nama-nama bulan untuk judul masing-masing kartu
+    var monthNames = new string[]
+    {
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    };
 }
 
 <!-- Header Halaman -->
@@ -13,7 +43,7 @@
         <h1 class="text-3xl font-extrabold text-[#17233F] tracking-tight">Ceremony Schedule</h1>
         <p class="text-sm text-gray-500 mt-1">Setup and manage the 12-month ceremony cycle and practice sessions.</p>
     </div>
-    
+
     <!-- Quick Actions -->
     <div class="flex items-center gap-3">
         <a href="/Home/CreateCeremony" class="bg-gradient-to-r from-[#0050A0] to-[#0065C5] text-white font-bold py-2.5 px-4 rounded-2xl shadow-md shadow-blue-500/10 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 text-sm flex items-center gap-2">
@@ -27,10 +57,10 @@
 
 <!-- Main Split Layout -->
 <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-    
+
     <!-- Left Column: 12 Months Grid (Spans 3 cols) -->
     <div class="lg:col-span-3 space-y-6">
-        
+
         <!-- Tab & View Switcher -->
         <div class="flex items-center justify-between bg-white p-3 rounded-2xl border border-slate-100 shadow-sm">
             <div class="flex gap-2">
@@ -41,201 +71,122 @@
                     <i class="bi bi-list-task"></i> List View
                 </button>
             </div>
-            <span class="text-xs font-semibold text-gray-400">Year: 2026</span>
+            
+            <div class="flex items-center gap-2 text-xs font-semibold text-gray-500">
+                <a href="?year=@(activeYear - 1)" class="w-6 h-6 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-gray-600 transition">
+                    <i class="bi bi-chevron-left text-[10px] font-bold"></i>
+                </a>
+                <span>Year: @activeYear</span>
+                <a href="?year=@(activeYear + 1)" class="w-6 h-6 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-gray-600 transition">
+                    <i class="bi bi-chevron-right text-[10px] font-bold"></i>
+                </a>
+            </div>
         </div>
 
         <!-- 12 Months Grid (4 columns x 3 rows) -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
             
-            <!-- Jan -->
-            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-40">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">January</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
-                </div>
-                <div class="my-2">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">AC Department</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 17 Jan 2026</p>
-                </div>
-            </div>
+            @for (int i = 0; i < 12; i++)
+            {
+                var c = monthlySchedules[i];
+                var monthName = monthNames[i];
 
-            <!-- Feb -->
-            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-40">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">February</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
-                </div>
-                <div class="my-2">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">Audio Department</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 17 Feb 2026</p>
-                </div>
-            </div>
-
-            <!-- Mar -->
-            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-40">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">March</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
-                </div>
-                <div class="my-2">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">QA Department</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 17 Mar 2026</p>
-                </div>
-            </div>
-
-            <!-- Apr -->
-            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-40">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">April</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
-                </div>
-                <div class="my-2">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">Production 1</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 19 Apr 2026</p>
-                </div>
-            </div>
-
-            <!-- May -->
-            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-40">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">May</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
-                </div>
-                <div class="my-2">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">Production 2</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 17 May 2026</p>
-                </div>
-            </div>
-
-            <!-- Jun -->
-            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-40">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">June</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
-                </div>
-                <div class="my-2">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">Logistics Dept</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 17 Jun 2026</p>
-                </div>
-            </div>
-
-            <!-- Jul -->
-            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-40">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">July</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
-                </div>
-                <div class="my-2">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">Planning Dept</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 17 Jul 2026</p>
-                </div>
-            </div>
-
-            <!-- Aug (Active) -->
-            <div class="bg-[#EBF7EE] border border-[#D1F2D9] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52 relative">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase">August</span>
-                </div>
-                <div class="my-3">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-emerald-800 mt-0.5">AC Department</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 27 Aug 2026</p>
-                </div>
-                <div class="border-t border-emerald-100 pt-2 flex justify-between items-center text-xs">
-                    <a href="/Home/CreateCeremony" class="text-emerald-700 font-bold hover:underline">Edit Date</a>
-                    <i class="bi bi-pencil-square text-emerald-700"></i>
-                </div>
-            </div>
-
-            <!-- Sep (Draft/Not Done Yet) -->
-            <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase">September</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-yellow-100 text-yellow-800">Draft</span>
-                </div>
-                <div class="my-3">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-gray-800 mt-0.5">Production 1</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 17 Sep 2026</p>
-                </div>
-                <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
-                    <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Edit Date</a>
-                    <i class="bi bi-pencil-square text-[#0050A0]"></i>
-                </div>
-            </div>
-
-            <!-- Oct (Draft/Not Done Yet) -->
-            <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase">October</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-yellow-100 text-yellow-800">Draft</span>
-                </div>
-                <div class="my-3">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-gray-800 mt-0.5">Engineering</p>
-                    <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> 19 Oct 2026</p>
-                </div>
-                <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
-                    <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Edit Date</a>
-                    <i class="bi bi-pencil-square text-[#0050A0]"></i>
-                </div>
-            </div>
-
-            <!-- Nov (Not Done Yet) -->
-            <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase">November</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-200 text-slate-600">Not Setup</span>
-                </div>
-                <div class="my-3">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-gray-400 mt-0.5">No Department</p>
-                    <p class="text-xs font-bold text-gray-400 mt-2"><i class="bi bi-calendar-event"></i> -</p>
-                </div>
-                <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
-                    <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Assign Dept</a>
-                    <i class="bi bi-plus-circle text-[#0050A0]"></i>
-                </div>
-            </div>
-
-            <!-- Dec (Not Done Yet) -->
-            <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
-                <div class="flex justify-between items-start">
-                    <span class="text-xs font-black text-gray-400 uppercase">December</span>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-200 text-slate-600">Not Setup</span>
-                </div>
-                <div class="my-3">
-                    <p class="text-xs font-bold text-gray-400">Department</p>
-                    <p class="text-sm font-extrabold text-gray-400 mt-0.5">No Department</p>
-                    <p class="text-xs font-bold text-gray-400 mt-2"><i class="bi bi-calendar-event"></i> -</p>
-                </div>
-                <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
-                    <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Assign Dept</a>
-                    <i class="bi bi-plus-circle text-[#0050A0]"></i>
-                </div>
-            </div>
+                if (c != null)
+                {
+                    if (c.Status == CeremonyStatus.Completed)
+                    {
+                        <!-- Kartu Upacara Selesai (Completed - Warna Oranye Premium) -->
+                        <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-black text-gray-400 uppercase tracking-wider">@monthName</span>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
+                            </div>
+                            <div class="my-2">
+                                <p class="text-xs font-bold text-gray-400">Department</p>
+                                <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">@c.Department?.Name</p>
+                                <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")</p>
+                            </div>
+                            <div class="border-t border-orange-100 pt-2 flex justify-between items-center text-xs">
+                                <span class="text-gray-400 italic font-medium">History locked</span>
+                                <i class="bi bi-lock-fill text-gray-400"></i>
+                            </div>
+                        </div>
+                    }
+                    else if (c.Status == CeremonyStatus.Scheduled)
+                    {
+                        <!-- Kartu Upacara Terjadwal Aktif (Scheduled - Warna Hijau Panasonic) -->
+                        <div class="bg-[#EBF7EE] border border-[#D1F2D9] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52 relative">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-black text-emerald-800 uppercase tracking-wider">@monthName</span>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800">Active</span>
+                            </div>
+                            <div class="my-3">
+                                <p class="text-xs font-bold text-gray-400">Department</p>
+                                <p class="text-sm font-extrabold text-emerald-800 mt-0.5">@c.Department?.Name</p>
+                                <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")</p>
+                            </div>
+                            <div class="border-t border-emerald-100 pt-2 flex justify-between items-center text-xs">
+                                <a href="/Home/CreateCeremony" class="text-emerald-700 font-bold hover:underline">Edit Setup</a>
+                                <i class="bi bi-pencil-square text-emerald-700"></i>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- Kartu Upacara Berstatus Draft (Draft - Warna Abu-Abu/Kuning) -->
+                        <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-black text-gray-400 uppercase">@monthName</span>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-yellow-100 text-yellow-800">Draft</span>
+                            </div>
+                            <div class="my-3">
+                                <p class="text-xs font-bold text-gray-400">Department</p>
+                                <p class="text-sm font-extrabold text-gray-800 mt-0.5">@c.Department?.Name</p>
+                                <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")</p>
+                            </div>
+                            <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
+                                <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Continue Setup</a>
+                                <i class="bi bi-pencil-square text-[#0050A0]"></i>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <!-- KASUS 2: UPACARA BELUM DI-SETUP SAMA SEKALI (Not Setup) -->
+                    <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-black text-gray-400 uppercase">@monthName</span>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-200 text-slate-600">Not Setup</span>
+                        </div>
+                        <div class="my-3">
+                            <p class="text-xs font-bold text-gray-400">Department</p>
+                            <p class="text-sm font-extrabold text-gray-400 mt-0.5">No Department</p>
+                            <p class="text-xs font-bold text-gray-400 mt-2"><i class="bi bi-calendar-event"></i> -</p>
+                        </div>
+                        <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
+                            <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Assign Dept</a>
+                            <i class="bi bi-plus-circle text-[#0050A0]"></i>
+                        </div>
+                    </div>
+                }
+            }
 
         </div>
+
     </div>
-    
+
     <!-- Right Column: Practice Sessions (Spans 1 col) -->
     <div class="lg:col-span-1 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between h-[592px]">
         <div>
             <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <i class="bi bi-calendar-event text-amber-500"></i> Practice Sessions
             </h3>
-            
+
             <div class="space-y-4 overflow-y-auto max-h-[460px] pr-1">
                 <!-- Practice Session 1 (Active/Next) -->
                 <div class="bg-gradient-to-br from-amber-50/70 to-amber-100/20 border border-amber-100 rounded-2xl p-4 space-y-2.5 relative hover:shadow-sm transition duration-200">
-                    
+
                     <div class="flex items-center gap-2 text-[10px] font-extrabold text-amber-800 uppercase">
                         <i class="bi bi-tag-fill"></i> Next Session
                     </div>
@@ -280,12 +231,12 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="pt-4 border-t border-slate-50 text-center">
             <a href="/Home/Practice" class="text-xs font-bold text-[#0050A0] hover:underline flex items-center justify-center gap-1">
                 View All Sessions <i class="bi bi-arrow-right"></i>
             </a>
         </div>
     </div>
-    
+
 </div>

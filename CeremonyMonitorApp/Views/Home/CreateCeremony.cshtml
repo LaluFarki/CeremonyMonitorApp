@@ -352,7 +352,7 @@
 
         // Finish Creation Actions
         // Mengirimkan seluruh data Wizard (Tanggal, Departemen, Rundown MC, dan Doa) ke Backend
-        function wizardFinish() {
+        function wizardFinish(force = false) {
             const dateValue = document.getElementById("inputDate").value;
             const deptIdValue = parseInt(document.getElementById("inputDept").value);
             const prayerValue = document.getElementById("wizardPrayerInput").value;
@@ -376,7 +376,8 @@
                 scheduledDate: dateValue,
                 departmentId: deptIdValue,
                 rundownItems: rundownData,
-                prayerText: prayerValue
+                prayerText: prayerValue,
+                force: force
             };
 
             //    // Ubah status tombol finish agar tidak disubmit berkali-kali (double-submit protection)
@@ -407,7 +408,19 @@
                             successModal.querySelector(".transform").classList.remove("scale-95");
                             successModal.querySelector(".transform").classList.add("scale-100");
                         }, 10);
+                    } else if (data.duplicateWarning) {
+                        //jika ada peringatan duplikasi, tampilkan dialogg konfirmasi browser
+                        if (confirm(data.message)) {
+                            // Jika klik OK, panggil ulang fungsi ini dengan parameter force = true
+                            wizardFinish(true);
+                        } else {
+                            // Jika klik Cancel, aktifkan kembali tombol agar bisa diganti tanggalnya
+                            btnFinish.disabled = false;
+                            btnFinish.innerHTML = '<i class="bi bi-check-circle-fill text-sm"></i> Create Ceremony';
+                        }
+
                     } else {
+                        //kalo batal ,aktifin kembli tombol create
                         alert("Failed to save ceremony: " + (data.message || "Uknown error"));
                         btnFinish.disabled = false;
                         btnFinish.innerHTML = '<i class="bi bi-check-circle-fill text-sm"></i> Create Ceremony'
@@ -444,11 +457,11 @@
                 const itemDiv = document.createElement("div");
                 itemDiv.className = "flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100/70 border border-slate-150 p-2.5 rounded-xl transition duration-150";
                 itemDiv.innerHTML = `
-                                                                                    <i class="bi bi-grip-vertical text-slate-400 cursor-grab"></i>
-                                                                                    <span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${getCategoryClass(item.category)}">${item.category}</span>
-                                                                                    <input type="text" value="${item.text}" oninput="updateWizardItem(${item.id}, this.value)" class="flex-grow bg-transparent border-none text-xs font-semibold text-gray-700 focus:outline-none" />
-                                                                                    <button onclick="deleteWizardItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1.5"><i class="bi bi-trash-fill"></i></button>
-                                                                                `;
+                                                                                                        <i class="bi bi-grip-vertical text-slate-400 cursor-grab"></i>
+                                                                                                        <span class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded border ${getCategoryClass(item.category)}">${item.category}</span>
+                                                                                                        <input type="text" value="${item.text}" oninput="updateWizardItem(${item.id}, this.value)" class="flex-grow bg-transparent border-none text-xs font-semibold text-gray-700 focus:outline-none" />
+                                                                                                        <button onclick="deleteWizardItem(${item.id})" class="text-rose-500 hover:text-rose-700 p-1.5"><i class="bi bi-trash-fill"></i></button>
+                                                                                                    `;
                 wizardChecklistContainer.appendChild(itemDiv);
             });
         }

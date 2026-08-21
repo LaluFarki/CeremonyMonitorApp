@@ -25,9 +25,18 @@ namespace CeremonyMonitorApp.Controllers
             return View();
         }
 
-        public IActionResult Schedule()
+        public async Task<IActionResult> Schedule(int? year)
         {
-            return View();
+            int activeYear = year ?? DateTime.Now.Year;
+            ViewBag.ActiveYear = activeYear;
+
+            var ceremonies = await _context.Ceremonies
+                .Include(c => c.Department)
+                .Where(c => c.ScheduledDate.Year == activeYear)
+                .OrderBy(c => c.ScheduledDate)
+                .ToListAsync();
+            
+            return View(ceremonies);
         }
 
         public IActionResult MCChecklist()

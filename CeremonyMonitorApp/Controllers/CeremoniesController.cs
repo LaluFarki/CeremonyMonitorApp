@@ -19,6 +19,8 @@ public class CreateCeremonyWizardDto
     //teks Doa 
     public string? prayertext { get; set; }
 
+    // Properti baru: bernilai true jika HRD mengonfirmasi ingin memaksa simpan
+    public bool Force { get; set; }
 }
 
 public class RundownItemDto
@@ -173,6 +175,26 @@ public class CeremoniesController : Controller
             return BadRequest("Data Pendaftaran Tidak Valid");
         }
 
+        // Jika parameter Force bernilai false, kita lakukan pengecekan duplikasi bulan
+        if (!dto.Force)
+        {
+            var targetMonth = dto.ScheduledDate.Month;
+            var targetYear = dto.ScheduledDate.Year;
+            // Cek apakah ada upacara di database dengan bulan & tahun yang sama
+            var duplicateExists = await _context.Ceremonies
+                .AnyAsync(c => c.ScheduledDate.Month == targetMonth && c.ScheduledDate.Year == targetYear);
+            if (duplicateExists)
+            {
+                var monthName = dto.ScheduledDate.ToString("MMM yyyy");
+                // Mengembalikan pesan peringatan ke frontend tanpa menyimpan ke database
+                return Json(new
+                {
+                    success = false,
+                    duplicateWarning = true,
+                    message = $"The Ceremony In {monthName} is Already Exist , Are you Sure To Add it?"
+                });
+            }
+        }
         //2. Buat objek Upacara (Ceremony Baru)
         var ceremony = new Ceremony
         {
