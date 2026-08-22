@@ -4,21 +4,26 @@
 
     // 1. Ambil tahun aktif dari ViewBag, jika null gunakan tahun saat ini secara dinamis
     int activeYear = ViewBag.ActiveYear ?? DateTime.Now.Year;
-    // 2. Buat kontainer array berisi 12 slot upacara (mewakili 12 bulan )
-    var monthlySchedules = new Ceremony[12];
 
-    // 2. Isi kontainer berdasarkan bulan pelaksanaan dari database
+    // 2. Buat kontainer array berisi 12 List upacara (untuk menampung banyak upacara di bulan yang sama)
+    var monthlySchedules = new List<Ceremony>[12];
+    for (int i = 0; i < 12; i++)
+    {
+        monthlySchedules[i] = new List<Ceremony>();
+    }
+
+    // 3. Isi kontainer berdasarkan bulan pelaksanaan dari database
     if (Model != null)
     {
         foreach (var c in Model)
         {
-            // Saring hanya upacara yang sesuai dengan taun aktif
+            // Saring hanya upacara yang sesuai dengan tahun aktif
             if (c.ScheduledDate.Year == activeYear)
             {
                 int monthIndex = c.ScheduledDate.Month - 1; // Konversi bulan 1-12 menjadi index array 0-11
                 if (monthIndex >= 0 && monthIndex < 12)
                 {
-                    monthlySchedules[monthIndex] = c;
+                    monthlySchedules[monthIndex].Add(c); // Tambahkan ke List di bulan tersebut
                 }
             }
         }
@@ -31,6 +36,7 @@
         "July", "August", "September", "October", "November", "December"
     };
 }
+
 
 <!-- Header Halaman -->
 <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -55,6 +61,16 @@
     </div>
 </div>
 
+<div class="flex items-center gap-2 text-xs font-semibold text-gray-500">
+    <a href="?year=@(activeYear - 1)" class="w-6 h-6 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-gray-600 transition">
+        <i class="bi bi-chevron-left text-[10px] font-bold"></i>
+    </a>
+    <span>Year : @activeYear</span>
+    <a href="?year=@(activeYear + 1)" class="w-6 h-6 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-gray-600 transition">
+        <i class="bi bi-chevron-right text-[10px] font-bold"></i>
+    </a>
+</div>
+
 <!-- Main Split Layout -->
 <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
@@ -71,89 +87,122 @@
                     <i class="bi bi-list-task"></i> List View
                 </button>
             </div>
-            
-            <div class="flex items-center gap-2 text-xs font-semibold text-gray-500">
-                <a href="?year=@(activeYear - 1)" class="w-6 h-6 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-gray-600 transition">
-                    <i class="bi bi-chevron-left text-[10px] font-bold"></i>
-                </a>
-                <span>Year: @activeYear</span>
-                <a href="?year=@(activeYear + 1)" class="w-6 h-6 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-gray-600 transition">
-                    <i class="bi bi-chevron-right text-[10px] font-bold"></i>
-                </a>
-            </div>
+            <span class="text-xs font-semibold text-gray-400">Year: @activeYear</span>
         </div>
 
-        <!-- 12 Months Grid (4 columns x 3 rows) -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-            
             @for (int i = 0; i < 12; i++)
             {
-                var c = monthlySchedules[i];
+                var ceremoniesInMonth = monthlySchedules[i];
                 var monthName = monthNames[i];
 
-                if (c != null)
+                //Hitung status periode waktu bulan ini secara dinamis debanding waktu sekarang
+                string timePeriod; // past , fututure , present
+                if (activeYear < DateTime.Now.Year)
                 {
-                    if (c.Status == CeremonyStatus.Completed)
+                    timePeriod = "past";
+                }
+                else if (activeYear > DateTime.Now.Year)
+                {
+                    timePeriod = "future";
+                }
+                else
+                {
+                    int currentMonth = DateTime.Now.Month;
+                    int monthNumber = i + 1;
+                    if (monthNumber < currentMonth) timePeriod = "past";
+                    else if (monthNumber == currentMonth) timePeriod = "present";
+                    else timePeriod = "future";
+                }
+
+                if (ceremoniesInMonth.Count > 0)
+                {
+                    // URUTKAN upacara di bulan tersebut berdasarkan tanggal terkecil
+                    var sortedCeremonies = ceremoniesInMonth
+                        .OrderBy(c => c.ScheduledDate)
+                        .ToList();
+
+                    // Loop untuk menampilkan semua kartu upacara yang terdaftar di bulan ini
+                    foreach (var c in sortedCeremonies)
                     {
-                        <!-- Kartu Upacara Selesai (Completed - Warna Oranye Premium) -->
-                        <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs font-black text-gray-400 uppercase tracking-wider">@monthName</span>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
+                        if (timePeriod == "past")
+                        {
+                            <!-- Kartu Upacara Selesai/Past (Warna Oranye Premium) -->
+                            <div class="bg-[#FFF8F2] border border-[#FFEAD5] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
+                                <div class="flex justify-between items-start">
+                                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">@monthName</span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-orange-100 text-orange-850">Completed</span>
+                                </div>
+                                <div class="my-2">
+                                    <p class="text-xs font-bold text-gray-400">Department</p>
+                                    <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">@c.Department?.Name</p>
+                                    <p class="text-xs font-bold text-gray-700 mt-2">
+                                        <i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")
+                                    </p>
+                                </div>
+                                <div class="border-t border-orange-100 pt-2 flex justify-between items-center text-xs">
+                                    <span class="text-gray-400 italic font-medium">History locked</span>
+                                    <button onclick="deleteCeremony(@c.Id, '@c.Department?.Name', '@c.ScheduledDate.ToString("dd MMM yyyy")')" class="text-rose-500 hover:text-rose-700 font-semibold" title="Delete Schedule">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="my-2">
-                                <p class="text-xs font-bold text-gray-400">Department</p>
-                                <p class="text-sm font-extrabold text-[#0050A0] mt-0.5">@c.Department?.Name</p>
-                                <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")</p>
+                        }
+                        else if (timePeriod == "present")
+                        {
+                            <!-- Kartu Upacara Bulan Aktif/Sekarang (Warna Hijau Panasonic) -->
+                            <div class="bg-[#EBF7EE] border border-[#D1F2D9] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52 relative">
+                                <div class="flex justify-between items-start">
+                                    <span class="text-xs font-black text-emerald-800 uppercase tracking-wider">@monthName</span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800">Active</span>
+                                </div>
+                                <div class="my-3">
+                                    <p class="text-xs font-bold text-gray-400">Department</p>
+                                    <p class="text-sm font-extrabold text-emerald-800 mt-0.5">@c.Department?.Name</p>
+                                    <p class="text-xs font-bold text-gray-700 mt-2">
+                                        <i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")
+                                    </p>
+                                </div>
+                                <div class="border-t border-emerald-100 pt-2 flex justify-between items-center text-xs">
+                                    <button onclick="openEditModal(@c.Id, '@c.ScheduledDate.ToString("yyyy-MM-dd")', @c.DepartmentId)" class="text-emerald-700 font-bold hover:underline flex items-center gap-1">
+                                        <i class="bi bi-pencil-square"></i> Edit Date
+                                    </button>
+                                    <button onclick="deleteCeremony(@c.Id, '@c.Department?.Name', '@c.ScheduledDate.ToString("dd MMM yyyy")')" class="text-rose-500 hover:text-rose-700 font-semibold" title="Delete Schedule">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="border-t border-orange-100 pt-2 flex justify-between items-center text-xs">
-                                <span class="text-gray-400 italic font-medium">History locked</span>
-                                <i class="bi bi-lock-fill text-gray-400"></i>
+                        }
+                        else
+                        {
+                            <!-- Kartu Upacara Mendatang/Future (Warna Abu-Abu/Draft) -->
+                            <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
+                                <div class="flex justify-between items-start">
+                                    <span class="text-xs font-black text-gray-400 uppercase">@monthName</span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-yellow-100 text-yellow-800">Draft</span>
+                                </div>
+                                <div class="my-3">
+                                    <p class="text-xs font-bold text-gray-400">Department</p>
+                                    <p class="text-sm font-extrabold text-gray-800 mt-0.5">@c.Department?.Name</p>
+                                    <p class="text-xs font-bold text-gray-700 mt-2">
+                                        <i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")
+                                    </p>
+                                </div>
+                                <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
+                                    <button onclick="openEditModal(@c.Id, '@c.ScheduledDate.ToString("yyyy-MM-dd")', @c.DepartmentId)" class="text-[#0050A0] font-bold hover:underline flex items-center gap-1">
+                                        <i class="bi bi-pencil-square"></i> Edit Setup
+                                    </button>
+                                    <button onclick="deleteCeremony(@c.Id, '@c.Department?.Name', '@c.ScheduledDate.ToString("dd MMM yyyy")')" class="text-rose-500 hover:text-rose-700 font-semibold" title="Delete Schedule">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    }
-                    else if (c.Status == CeremonyStatus.Scheduled)
-                    {
-                        <!-- Kartu Upacara Terjadwal Aktif (Scheduled - Warna Hijau Panasonic) -->
-                        <div class="bg-[#EBF7EE] border border-[#D1F2D9] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52 relative">
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs font-black text-emerald-800 uppercase tracking-wider">@monthName</span>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800">Active</span>
-                            </div>
-                            <div class="my-3">
-                                <p class="text-xs font-bold text-gray-400">Department</p>
-                                <p class="text-sm font-extrabold text-emerald-800 mt-0.5">@c.Department?.Name</p>
-                                <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")</p>
-                            </div>
-                            <div class="border-t border-emerald-100 pt-2 flex justify-between items-center text-xs">
-                                <a href="/Home/CreateCeremony" class="text-emerald-700 font-bold hover:underline">Edit Setup</a>
-                                <i class="bi bi-pencil-square text-emerald-700"></i>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <!-- Kartu Upacara Berstatus Draft (Draft - Warna Abu-Abu/Kuning) -->
-                        <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs font-black text-gray-400 uppercase">@monthName</span>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-yellow-100 text-yellow-800">Draft</span>
-                            </div>
-                            <div class="my-3">
-                                <p class="text-xs font-bold text-gray-400">Department</p>
-                                <p class="text-sm font-extrabold text-gray-800 mt-0.5">@c.Department?.Name</p>
-                                <p class="text-xs font-bold text-gray-700 mt-2"><i class="bi bi-calendar-event"></i> @c.ScheduledDate.ToString("dd MMM yyyy")</p>
-                            </div>
-                            <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
-                                <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Continue Setup</a>
-                                <i class="bi bi-pencil-square text-[#0050A0]"></i>
-                            </div>
-                        </div>
+                        }
                     }
                 }
                 else
                 {
-                    <!-- KASUS 2: UPACARA BELUM DI-SETUP SAMA SEKALI (Not Setup) -->
+                    <!-- KASUS 2: BELUM DI-SETUP (Not Setup) -->
                     <div class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-3xl p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-52">
                         <div class="flex justify-between items-start">
                             <span class="text-xs font-black text-gray-400 uppercase">@monthName</span>
@@ -165,8 +214,9 @@
                             <p class="text-xs font-bold text-gray-400 mt-2"><i class="bi bi-calendar-event"></i> -</p>
                         </div>
                         <div class="border-t border-slate-100 pt-2 flex justify-between items-center text-xs">
-                            <a href="/Home/CreateCeremony" class="text-[#0050A0] font-bold hover:underline">Assign Dept</a>
-                            <i class="bi bi-plus-circle text-[#0050A0]"></i>
+                            <a href="/Home/CreateCeremony?month=@(i + 1)&year=@activeYear" class="text-[#0050A0] font-bold hover:underline flex items-center gap-1">
+                                <i class="bi bi-plus-circle"></i> Assign Dept
+                            </a>
                         </div>
                     </div>
                 }
@@ -240,3 +290,154 @@
     </div>
 
 </div>
+
+<!-- Modal Popup Edit Ceremony -->
+<div id="editCeremonyModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-slate-100 space-y-4 transform scale-95 transition-transform duration-200">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+            <h3 class="text-sm font-extrabold text-gray-800">Edit Ceremony Setup</h3>
+            <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
+                <i class="bi bi-x-lg text-sm"></i>
+            </button>
+        </div>
+
+        <!-- Input Hidden untuk menyimpan ID Upacara yang sedang diedit -->
+        <input type="hidden" id="editCeremonyId"/>
+
+        <div class="space-y-4">
+            <div>
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block mb-1">Ceremony Date</label>
+                <input type="date" id="editDateInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl focus:outline-none focus:border-[#0050A0] text-xs font-bold text-gray-700 cursor-pointer"/>
+            </div>
+            <div>
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-wider block mb-1">Executing Department</label>
+                <select id="editDeptInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-2xl bg-white focus:outline-none focus:border-[#0050A0] text-xs font-bold text-gray-700 cursor-pointer">
+                    @if (ViewBag.Departments != null)
+                    {
+                        foreach (var dept in ViewBag.Departments as List<Department>)
+                        {
+                            <option value="@dept.Id">@dept.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="flex gap-3 pt-2">
+            <button onclick="closeEditModal()" class="flex-grow bg-slate-100 hover:bg-slate-200 text-gray-700 font-bold py-2 rounded-xl text-xs transition duration-150">
+                Cancel
+            </button>
+            <button onclick="saveEditChanges()" id="btnSaveEdit" class="flex-grow bg-[#0050A0] hover:bg-[#003d7a] text-white font-bold py-2 rounded-xl text-xs transition duration-150">
+                Save Changes
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const editModal = document.getElementById("editCeremonyModal");
+
+        //1. fungsi untuk membuka modal dan mengisi datanya secara otomatis
+        function openEditModal(id, dateString, deptId) {
+            document.getElementById("editCeremonyId").value = id;
+            document.getElementById("editDateInput").value = dateString;
+            document.getElementById("editDeptInput").value = deptId;
+        }
+
+        //ebuka modal & efekanimasi
+        editModal.classList.remove("hidden");
+        setTimeout(() => {
+            editModal.classList.remove("opacity-0");
+            editModal.querySelector(".transform").classList.remove("scale-95");
+            editModal.querySelector(".transform").classList.add("scale-100");
+        })
+
+        //2. fungsi menutup modal
+        function closeEditModal() {
+            editModal.querySelector(".transform").classList.remove(scale - 100);
+            editModal.querySelector(".transform").classList.add(scale - 95);
+            editModal.classList.add("opacity-0");
+            setTimeout(() => {
+                editModal.classList.add("hidden");
+            }, 200);
+        }
+
+        //3 . fungsi memproses penyimpanan hasil edit via AJAX (fetch)
+        function saveEditChanges() {
+            const id = parseInt(document.getElementById("editCeremonyId").value);
+            const dateValue = document.getElementById("editDateInput").value;
+            const deptIdValue = parseInt(document.getElementById("editDeptInput").value);
+
+            if (!dateValue) {
+                alert("please select a date first")
+                return;
+            }
+
+            const payload = {
+                id: id,
+                scheduledDate: dateValue,
+                departmentId: deptIdValue
+            };
+
+            const btnSave = document.getElementById("btnSaveEdit");
+            btnSave.disabled = true;
+            btnSave.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving...';
+
+            fetch('/Ceremonies/EditQuick', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP Error" + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        //refresh hlaman untuk memperbarui tampilan di kalender
+                        window.location.reload();
+                    } else {
+                        alert(data.message || "Failed to update ceremony.");
+                        btnSave.disabled = false;
+                        btnSave.innerHTML = 'Save Changes';
+                    }
+                })
+                .catch(error => {
+                    console.error("Error editing ceremony: " error);
+                    alert("An error occured while updating the ceremony.");
+                    btnSave.disabled = false;
+                    btnSave.innerHTML = 'Save Changes';
+                });
+        }
+        // 4. Fungsi memproses penghapusan jadwal via AJAX (fetch) dengan konfirmasi
+        function deleteCeremony(id, deptName, dateString) {
+            const confirmationMessage = `Apakah Anda yakin ingin menghapus jadwal upacara untuk ${deptName} pada tanggal ${dateString}?\n\nTindakan ini juga akan menghapus seluruh data checklist MC dan doa terkait upacara ini.`;
+
+            if (confirm(confirmationMessage)) {
+                fetch(`/Ceremonies/DeleteQuick?id=${id}`, {
+                    method: 'POST'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload(); // Refresh halaman untuk menghapus kartu dari grid
+                        } else {
+                            alert(data.message || "Gagal menghapus upacara.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error deleting ceremony:", error);
+                        alert("Terjadi kesalahan saat mencoba menghapus upacara.");
+                    });
+            }
+        }
+    </script>
+}
+
+

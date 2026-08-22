@@ -224,6 +224,8 @@ public class CeremoniesController : Controller
             _context.MCChecklistItems.Add(mccItem);
         }
 
+       
+
         // 4. Memasukkan Teks Doa ke Tabel nya
         if (!string.IsNullOrWhiteSpace(dto.prayertext))
         {
@@ -283,4 +285,75 @@ public class CeremoniesController : Controller
     {
         return _context.Ceremonies.Any(e => e.Id == id);
     }
+
+    // =========================================================
+    // POST: /Ceremonies/EditQuick
+    // Update Cepat Tanggal & Departemen via Popup Modal
+    // =========================================================
+    [HttpPost]
+    public async Task<IActionResult> EditQuick([FromBody] EditCeremonyQuickDto dto)
+    {
+        if (dto == null)
+            return BadRequest("Data Is Invalid");
+
+        var targetMonth = dto.ScheduledDate.Month;
+        var targetYear = dto.ScheduledDate.Year;
+
+        // Pengecekan duplikasi bulan jika Force bernilai false (mengecualikan Upacara yg sedang di edit)
+        if (!dto.Force)
+        {
+            var duplicateExists = await _context.Ceremonies
+                .AnyAsync(c =>
+                    c.Id != dto.Id && c.ScheduledDate.Month == targetMonth && c.ScheduledDate.Year == targetYear);
+
+            if (duplicateExists)
+            {
+                var monthName = dto.ScheduledDate.ToString("MMMM yyyy");
+                return Json(new { 
+                    success = false, 
+                    duplicateWarning = true, 
+                    message = $"Upacara di bulan {monthName} sudah dijadwalkan. Apakah Anda yakin ingin memindahkannya?" 
+                });
+            }
+        }
+
+        var ceremony = await _context.Ceremonies.FindAsync(dto.Id);
+        if (ceremony == null)
+            return NotFound("Ceremonies Does not Exist");
+
+        //update data 
+        ceremony.ScheduledDate = dto.ScheduledDate;
+        ceremony.DepartmentId = dto.DepartmentId;
+
+        await _context.SaveChangesAsync();
+        return Json(new { success = true });
+    }
+
+    // =========================================================
+    // POST: /Ceremonies/DeleteQuick
+    // Menghapus upacara secara permanen (otomatis menghapus rundown & doa)
+    // =========================================================
+    [HttpPost]
+    public async Task<IActionResult> DeleteQuick(int id)
+    {
+        var ceremony = await _context.Ceremonies.FindAsync(id);
+        if (ceremony == null)
+        {
+            return Json(new { success = false, message = "Ceremonies Does not Exist" });
+        }
+
+        // Hapus upacara. Relasi checklist & doa otomatis terhapus secara Cascade oleh database
+        _context.Ceremonies.Remove(ceremony);
+        await _context.SaveChangesAsync();
+
+        return Json(new { success = true });
+    }
+}
+
+public class EditCeremonyQuickDto
+{
+    public int Id { get; set; }
+    public DateTime ScheduledDate { get; set; }
+    public int DepartmentId { get; set; }
+    public bool Force { get; set; }
 }

@@ -29,6 +29,7 @@ namespace CeremonyMonitorApp.Controllers
         {
             int activeYear = year ?? DateTime.Now.Year;
             ViewBag.ActiveYear = activeYear;
+            ViewBag.Departments = await _context.Departments.ToListAsync();
 
             var ceremonies = await _context.Ceremonies
                 .Include(c => c.Department)
